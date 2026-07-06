@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>香作所 ATELIER ODE — 手工調製香氛</title>
+
+    <style>
+        /* =====================================================
+           設計 Token — Aesop / Le Labo 質感
+           paper  紙感底色   ink  近黑墨色
+           kraft  牛皮紙色   line 鉛筆細線
+           ===================================================== */
+        :root {
+            --paper: #edeae2;
+            --paper-2: #e4e0d4;
+            --ink: #26241f;
+            --ink-70: #55524a;
+            --ink-40: #8b877c;
+            --line: #c9c4b5;
+            --kraft: #b6a685;
+            --serif-en: 'Cormorant Garamond', serif;
+            --serif-tc: 'Noto Serif TC', serif;
+            --mono: 'IBM Plex Mono', monospace;
+            --sans: 'Noto Sans TC', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-weight: 300;
+        }
+
+        /* Le Labo 式標籤字（簽名元素）：等寬、大寫、字距拉開 */
+        .ode-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+        }
+
+        /* Aesop 式義大利體引言 */
+        .ode-eyebrow {
+            font-family: var(--serif-en);
+            font-style: italic;
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--ink-70);
+            letter-spacing: 1px;
+        }
+
+        /* 通用按鈕：細框矩形、hover 反轉 —— 全站唯一按鈕語彙 */
+        .ode-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 10px 28px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        .ode-btn:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* 深色底上的按鈕 */
+        .ode-btn-light {
+            border-color: var(--paper);
+            color: var(--paper);
+        }
+
+        .ode-btn-light:hover {
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        /* 實心主要按鈕 */
+        .ode-btn-solid {
+            background: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
+        }
+
+        .ode-btn-solid:hover {
+            background: transparent;
+            color: var(--ink);
+        }
+
+        /* =====================================================
+           Navbar
+           ===================================================== */
+        .ode-navbar {
+            background: var(--paper) !important;
+            border-bottom: 1px solid var(--ink);
+            font-family: var(--mono);
+            padding-top: 0.9rem;
+            padding-bottom: 0.9rem;
+        }
+
+        .ode-navbar .navbar-brand {
+            font-family: var(--serif-tc);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--ink) !important;
+            letter-spacing: 4px;
+        }
+
+        .ode-navbar .navbar-brand .brand-en {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--ink-40);
+            margin-left: 8px;
+        }
+
+        .ode-navbar .nav-link {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-70) !important;
+            padding: 0.5rem 1.1rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .ode-navbar .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 1.1rem;
+            right: 1.1rem;
+            height: 1px;
+            background: var(--ink);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.25s;
+        }
+
+        .ode-navbar .nav-link:hover,
+        .ode-navbar .nav-link.active {
+            color: var(--ink) !important;
+        }
+
+        .ode-navbar .nav-link:hover::after,
+        .ode-navbar .nav-link.active::after {
+            transform: scaleX(1);
+        }
+
+        .ode-navbar .dropdown-menu {
+            background: var(--paper);
+            border: 1px solid var(--ink);
+            border-radius: 0;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .ode-navbar .dropdown-item {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-70);
+            padding: 0.7rem 1.25rem;
+            border-bottom: 1px solid var(--line);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .ode-navbar .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .ode-navbar .dropdown-item:hover,
+        .ode-navbar .dropdown-item.active,
+        .ode-navbar .dropdown-item:active {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .ode-navbar .navbar-toggler {
+            border: 1px solid var(--ink);
+            border-radius: 0;
+        }
+
+        .ode-navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2326241f' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 8h22M4 15h22M4 22h22'/%3e%3c/svg%3e");
+        }
+
+        /* =====================================================
+           Modal 共用（註冊 / 登入）— 牛皮紙標籤風
+           ===================================================== */
+        #registerModal .modal-dialog {
+            max-width: 760px;
+        }
+
+        #loginModal .modal-dialog {
+            max-width: 400px;
+        }
+
+        #registerModal .modal-content,
+        #loginModal .modal-content {
+            border: 1px solid var(--ink);
+            border-radius: 0;
+            background: var(--paper);
+            font-family: var(--sans);
+            color: var(--ink);
+            overflow: hidden;
+        }
+
+        #registerModal .modal-header,
+        #loginModal .modal-header {
+            background: var(--paper);
+            border-bottom: 1px solid var(--ink);
+            padding: 1.1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* 簽名元素：Le Labo 式配方標籤章 */
+        .ode-stamp {
+            border: 1px solid var(--ink);
+            padding: 6px 10px;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink);
+            line-height: 1.6;
+            flex-shrink: 0;
+        }
+
+        .ode-modal-title {
+            font-family: var(--serif-tc);
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin: 0;
+        }
+
+        .ode-modal-sub {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+        }
+
+        #registerModal .btn-close,
+        #loginModal .btn-close {
+            margin-left: auto;
+            opacity: 0.55;
+        }
+
+        #registerModal .btn-close:hover,
+        #loginModal .btn-close:hover {
+            opacity: 1;
+        }
+
+        #registerModal .modal-body {
+            padding: 0;
+        }
+
+        #registerModal .modal-body .row {
+            margin: 0;
+        }
+
+        /* 左欄：條款 */
+        .ode-terms-col {
+            padding: 1.6rem 1.4rem 1.6rem 1.5rem;
+            background: var(--paper-2);
+            border-right: 1px solid var(--line);
+        }
+
+        .ode-section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ode-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .ode-terms-text {
+            font-size: 11.5px;
+            color: var(--ink-70);
+            line-height: 2;
+        }
+
+        .ode-terms-text p {
+            margin: 0 0 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .ode-terms-text p:last-child {
+            border-bottom: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 右欄：表單 */
+        .ode-form-col {
+            padding: 1.6rem 1.5rem 1.6rem 1.4rem;
+        }
+
+        .ode-field {
+            margin-bottom: 14px;
+        }
+
+        .ode-label {
+            display: block;
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 5px;
+        }
+
+        .ode-input {
+            width: 100%;
+            padding: 8px 2px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--ink-40);
+            border-radius: 0;
+            font-size: 13px;
+            color: var(--ink);
+            font-family: var(--sans);
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .ode-input:focus {
+            border-bottom-color: var(--ink);
+        }
+
+        .ode-input::placeholder {
+            color: var(--ink-40);
+            font-size: 12px;
+        }
+
+        /* Checkbox */
+        .ode-check-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .ode-check {
+            width: 14px;
+            height: 14px;
+            border: 1px solid var(--ink);
+            background: transparent;
+            appearance: none;
+            -webkit-appearance: none;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .ode-check:checked {
+            background: var(--ink);
+        }
+
+        .ode-check:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 1px;
+            font-size: 10px;
+            color: var(--paper);
+        }
+
+        .ode-check-label {
+            font-size: 11px;
+            color: var(--ink-70);
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        #registerModal .modal-footer,
+        #loginModal .modal-footer {
+            background: var(--paper);
+            border-top: 1px solid var(--ink);
+            padding: 0.9rem 1.5rem;
+            gap: 10px;
+        }
+
+        #loginModal .modal-body {
+            padding: 1.6rem 1.5rem 0.75rem;
+        }
+
+        /* =====================================================
+           Hero carousel — 靜物影像 + 配方標籤
+           ===================================================== */
+        .ode-carousel {
+            position: relative;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .ode-carousel .carousel-item {
+            height: 88vh;
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* 影像壓低飽和、統一紙感色溫 */
+        .ode-carousel .carousel-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(38, 36, 31, 0.08) 0%,
+                    rgba(38, 36, 31, 0.02) 45%,
+                    rgba(38, 36, 31, 0.30) 100%);
+            pointer-events: none;
+        }
+
+        /* 簽名元素：左下角固定的配方標籤卡 */
+        .ode-hero-label {
+            position: absolute;
+            left: 2.5rem;
+            bottom: 2.5rem;
+            z-index: 5;
+            background: var(--paper);
+            border: 1px solid var(--ink);
+            padding: 1.4rem 1.6rem 1.2rem;
+            max-width: 340px;
+        }
+
+        .ode-hero-label .hl-no {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 8px;
+        }
+
+        .ode-hero-label .hl-name {
+            font-family: var(--serif-tc);
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            margin: 0 0 2px;
+        }
+
+        .ode-hero-label .hl-en {
+            font-family: var(--serif-en);
+            font-style: italic;
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--ink-70);
+            margin-bottom: 12px;
+        }
+
+        .ode-hero-label .hl-meta {
+            border-top: 1px solid var(--line);
+            padding-top: 10px;
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-70);
+            line-height: 2;
+        }
+
+        /* indicators：墨色細線 */
+        .ode-carousel .carousel-indicators {
+            margin-bottom: 1.5rem;
+            gap: 8px;
+        }
+
+        .ode-carousel .carousel-indicators [data-bs-target] {
+            width: 26px;
+            height: 1px;
+            border-radius: 0;
+            background-color: rgba(237, 234, 226, 0.5);
+            border: none;
+            transition: background-color 0.3s, width 0.3s;
+            opacity: 1;
+        }
+
+        .ode-carousel .carousel-indicators .active {
+            background-color: var(--paper);
+            width: 44px;
+        }
+
+        /* 控制箭頭：紙色細框 */
+        .ode-carousel .carousel-control-prev,
+        .ode-carousel .carousel-control-next {
+            width: 52px;
+            opacity: 1;
+        }
+
+        .ode-carousel .carousel-control-prev-icon,
+        .ode-carousel .carousel-control-next-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(38, 36, 31, 0.35);
+            border: 1px solid rgba(237, 234, 226, 0.6);
+            border-radius: 0;
+            background-size: 13px;
+            transition: background-color 0.2s;
+        }
+
+        .ode-carousel .carousel-control-prev:hover .carousel-control-prev-icon,
+        .ode-carousel .carousel-control-next:hover .carousel-control-next-icon {
+            background-color: rgba(38, 36, 31, 0.75);
+        }
+
+        /* =====================================================
+           Section 4 | 品牌數據
+           ===================================================== */
+        #s04 {
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+            overflow: hidden;
+        }
+
+        #s04 .s04-img-col {
+            min-height: 540px;
+            background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=900&q=80');
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            filter: saturate(0.8);
+        }
+
+        #s04 .s04-text-col {
+            padding: 4.5rem 3rem 3.5rem 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #s04 .s04-headline {
+            font-family: var(--serif-tc);
+            font-size: 38px;
+            font-weight: 400;
+            letter-spacing: 8px;
+            line-height: 1.3;
+            margin: 10px 0 20px;
+        }
+
+        #s04 .s04-divider {
+            width: 44px;
+            height: 1px;
+            background: var(--ink);
+            margin-bottom: 24px;
+        }
+
+        #s04 .s04-award {
+            font-family: var(--sans);
+            font-size: 12.5px;
+            font-weight: 300;
+            color: var(--ink-70);
+            letter-spacing: 1.5px;
+            line-height: 2;
+            margin: 0 0 8px;
+            padding-left: 14px;
+            border-left: 1px solid var(--ink);
+        }
+
+        #s04 .s04-stats-row {
+            border-top: 1px solid var(--line);
+            padding-top: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        #s04 .s04-stat {
+            padding: 0 1rem 0 0;
+        }
+
+        #s04 .s04-stat-label {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 8px;
+        }
+
+        .s04-stat-number01,
+        .s04-stat-number02,
+        .s04-stat-number03,
+        .s04-stat-number04 {
+            font-family: var(--serif-en);
+            font-size: 40px;
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .s04-stat-number01 span,
+        .s04-stat-number02 span,
+        .s04-stat-number03 span,
+        .s04-stat-number04 span {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--ink-40);
+            letter-spacing: 1px;
+            margin-left: 3px;
+        }
+
+        /* =====================================================
+           Section 5 | 訂香流程（時間軸）— 深墨底
+           ===================================================== */
+        #s05 {
+            position: relative;
+            background: var(--ink);
+            padding: 5.5rem 0;
+        }
+
+        .s05-main-title {
+            font-family: var(--serif-tc);
+            font-size: 30px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 7px;
+            margin-bottom: 6px;
+        }
+
+        .s05-main-title-en {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--kraft);
+            margin-bottom: 4px;
+        }
+
+        .s05-main-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--kraft);
+            margin: 18px auto 64px;
+        }
+
+        .s05-step-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--kraft);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .s05-step-title {
+            font-family: var(--serif-tc);
+            font-size: 21px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 4px;
+            margin: 0 0 12px;
+            padding-left: 14px;
+            border-left: 1px solid var(--kraft);
+        }
+
+        .s05-divider {
+            width: 28px;
+            height: 1px;
+            background: var(--kraft);
+            margin: 0 0 14px 14px;
+            opacity: 0.5;
+        }
+
+        .s05-step-text {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: #a8a396;
+            line-height: 2.1;
+            letter-spacing: 0.5px;
+            padding-left: 14px;
+            margin: 0;
+        }
+
+        .s05-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.75) contrast(0.95);
+            border: 1px solid rgba(237, 234, 226, 0.15);
+        }
+
+        .s05-row-divider {
+            border: none;
+            border-top: 1px solid rgba(237, 234, 226, 0.08);
+            margin: 3rem 0;
+        }
+
+        .s05-timeline-section {
+            position: relative;
+        }
+
+        .s05-timeline-section::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: rgba(237, 234, 226, 0.18);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .s05-timeline-pointer {
+            position: relative;
+        }
+
+        .s05-timeline-pointer::before {
+            position: absolute;
+            content: "";
+            width: 9px;
+            height: 9px;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background-color: var(--ink);
+            border: 1px solid var(--kraft);
+            left: 50%;
+            z-index: 2;
+        }
+
+        /* =====================================================
+           Section 6 | 品牌三原則
+           ===================================================== */
+        #s06 {
+            background: var(--paper);
+            padding: 5.5rem 0 4.5rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        #s06 .s06-main-title {
+            font-family: var(--serif-tc);
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+
+        #s06 .s06-main-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--ink);
+            margin: 16px auto 3.5rem;
+        }
+
+        #s06 .s06-col {
+            padding: 1.5rem 2.5rem;
+            border-right: 1px solid var(--line);
+        }
+
+        #s06 .s06-col:last-child {
+            border-right: none;
+        }
+
+        #s06 .s06-num {
+            font-family: var(--serif-en);
+            font-size: 44px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--ink-40);
+            line-height: 1;
+            margin-bottom: 1.25rem;
+        }
+
+        #s06 .s06-icon-divider {
+            width: 24px;
+            height: 1px;
+            background: var(--ink-40);
+            margin: 0 auto 1.2rem;
+        }
+
+        #s06 .s06-card-title {
+            font-family: var(--serif-tc);
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            margin-bottom: 14px;
+        }
+
+        #s06 .s06-card-text {
+            font-family: var(--sans);
+            font-size: 12.5px;
+            font-weight: 300;
+            color: var(--ink-70);
+            line-height: 2.1;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        /* =====================================================
+           Section 7 | 品牌故事
+           ===================================================== */
+        #s07 {
+            background: var(--paper-2);
+        }
+
+        #s07 .s07-img-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(228, 224, 212, 0) 55%,
+                    rgba(228, 224, 212, 0.92) 100%);
+            pointer-events: none;
+        }
+
+        #s07 .s07-headline {
+            font-family: var(--serif-tc);
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            margin: 8px 0 14px;
+        }
+
+        #s07 .s07-divider {
+            width: 32px;
+            height: 1px;
+            background: var(--ink);
+            margin-bottom: 22px;
+        }
+
+        #s07 .s07-body {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--ink-70);
+            line-height: 2.3;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.75rem;
+        }
+
+        #s07 .s07-sub-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-bottom: 8px;
+            padding-left: 10px;
+            border-left: 1px solid var(--ink);
+        }
+
+        #s07 .s07-sub-text {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--ink-70);
+            line-height: 2;
+            letter-spacing: 0.5px;
+            padding-left: 11px;
+        }
+
+        #s07 .s07-text-col {
+            padding: 4.5rem 2rem 4.5rem 3rem;
+        }
+
+        /* =====================================================
+           Section 8 | 會員等級 — 深墨底
+           ===================================================== */
+        #s08 {
+            background: var(--ink);
+            padding: 5.5rem 0;
+        }
+
+        #s08 .s08-main-title {
+            font-family: var(--serif-tc);
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+
+        #s08 .s08-main-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--kraft);
+            margin: 16px auto 3.5rem;
+        }
+
+        #s08 .s08-card {
+            background: transparent;
+            border: 1px solid rgba(237, 234, 226, 0.2);
+            padding: 1.9rem 1.7rem;
+            transition: border-color 0.25s, background 0.25s;
+            height: 100%;
+        }
+
+        #s08 .s08-card:hover {
+            border-color: var(--paper);
+            background: rgba(237, 234, 226, 0.03);
+        }
+
+        #s08 .s08-card-elite {
+            border: 1px solid var(--kraft);
+            background: rgba(182, 166, 133, 0.06);
+        }
+
+        #s08 .s08-card-elite:hover {
+            border-color: var(--paper);
+        }
+
+        #s08 .s08-no {
+            font-family: var(--serif-en);
+            font-style: italic;
+            font-size: 30px;
+            font-weight: 300;
+            color: var(--kraft);
+            line-height: 1;
+            width: 48px;
+            flex-shrink: 0;
+            padding-top: 4px;
+        }
+
+        #s08 .s08-member-label {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 6px;
+        }
+
+        #s08 .s08-member-title {
+            font-family: var(--serif-tc);
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 4px;
+            margin: 0 0 10px;
+        }
+
+        #s08 .s08-divider {
+            width: 24px;
+            height: 1px;
+            background: var(--kraft);
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        #s08 .s08-member-text {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 300;
+            color: #a8a396;
+            line-height: 2.1;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        #s08 .s08-elite-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: var(--kraft);
+            padding: 3px 10px;
+            margin-bottom: 10px;
+        }
+
+        /* =====================================================
+           Section 9 | 產品規格
+           ===================================================== */
+        #s09 {
+            background: var(--paper);
+            min-height: 560px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        #s09 .s09-img-col {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: auto;
+            background-image: url('https://images.unsplash.com/photo-1547887537-6158d64c35b3?w=900&q=80');
+            background-size: cover;
+            background-position: center;
+            filter: saturate(0.8);
+        }
+
+        #s09 .s09-img-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to left,
+                    rgba(237, 234, 226, 0) 55%,
+                    rgba(237, 234, 226, 0.95) 100%);
+            pointer-events: none;
+        }
+
+        #s09 .s09-text {
+            padding: 4.5rem 2rem 4.5rem 0;
+        }
+
+        #s09 .s09-headline {
+            font-family: var(--serif-tc);
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            margin: 8px 0 12px;
+        }
+
+        #s09 .s09-divider {
+            width: 32px;
+            height: 1px;
+            background: var(--ink);
+            margin-bottom: 2rem;
+        }
+
+        #s09 .s09-dl {
+            border-top: 1px solid var(--ink);
+        }
+
+        #s09 .s09-dl .row {
+            border-bottom: 1px solid var(--line);
+            padding: 0.85rem 0;
+            margin: 0;
+            align-items: baseline;
+        }
+
+        #s09 .s09-dt {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+
+        #s09 .s09-dd {
+            font-family: var(--sans);
+            font-size: 12.5px;
+            font-weight: 300;
+            color: var(--ink-70);
+            line-height: 2;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        /* =====================================================
+           Section 10 | 調香體驗預約 — 深墨底
+           ===================================================== */
+        #s10 {
+            background: var(--ink);
+            padding: 5.5rem 0;
+        }
+
+        #s10 .s10-main-title {
+            font-family: var(--serif-tc);
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+
+        #s10 .s10-main-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--kraft);
+            margin: 16px auto 3.5rem;
+        }
+
+        #s10 .s10-map {
+            border: 1px solid rgba(237, 234, 226, 0.2);
+            display: block;
+            filter: grayscale(0.85) brightness(0.85) contrast(0.95);
+        }
+
+        #s10 .s10-form-label {
+            font-family: var(--serif-tc);
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        #s10 .s10-form-divider {
+            width: 28px;
+            height: 1px;
+            background: var(--kraft);
+            opacity: 0.6;
+            margin-bottom: 1.5rem;
+        }
+
+        #s10 .s10-form-note {
+            font-family: var(--sans);
+            font-size: 11.5px;
+            font-weight: 300;
+            color: #a8a396;
+            letter-spacing: 0.5px;
+            line-height: 2;
+            margin-bottom: 1.75rem;
+        }
+
+        #s10 .ode-input {
+            border-bottom: 1px solid rgba(237, 234, 226, 0.35);
+            color: var(--paper);
+            padding: 10px 2px;
+        }
+
+        #s10 .ode-input:focus {
+            border-bottom-color: var(--paper);
+        }
+
+        #s10 .ode-input::placeholder {
+            color: rgba(237, 234, 226, 0.35);
+        }
+
+        #s10 .s10-field {
+            margin-bottom: 1.25rem;
+        }
+
+        #s10 .s10-field-label {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        #s10 .s10-check-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(237, 234, 226, 0.12);
+            margin-bottom: 1.75rem;
+        }
+
+        #s10 .ode-check {
+            border-color: var(--kraft);
+        }
+
+        #s10 .ode-check:checked {
+            background: var(--kraft);
+        }
+
+        #s10 .ode-check:checked::after {
+            color: var(--ink);
+        }
+
+        #s10 .ode-check-label {
+            color: #a8a396;
+        }
+
+        /* =====================================================
+           Section 11 | 人才招募
+           ===================================================== */
+        #s11 {
+            position: relative;
+            background: var(--paper-2);
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        #s11 .s11-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--paper);
+            background: var(--ink);
+            padding: 4px 14px;
+            margin-bottom: 16px;
+        }
+
+        #s11 .s11-headline {
+            font-family: var(--serif-tc);
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 6px;
+            margin: 0 0 8px;
+        }
+
+        #s11 .s11-sub-en {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-40);
+            margin-bottom: 0;
+        }
+
+        #s11 .s11-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--ink);
+            margin: 20px 0 28px;
+        }
+
+        #s11 .s11-item-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 1px solid var(--ink);
+        }
+
+        #s11 .s11-item-text {
+            font-family: var(--sans);
+            font-size: 12.5px;
+            font-weight: 300;
+            color: var(--ink-70);
+            line-height: 2.2;
+            letter-spacing: 0.5px;
+            padding-left: 11px;
+            margin-bottom: 1.5rem;
+        }
+
+        #s11 .s11-item-divider {
+            border: none;
+            border-top: 1px solid var(--line);
+            margin: 0 0 1.5rem;
+        }
+
+        /* =====================================================
+           Section 12 | Footer
+           ===================================================== */
+        #s12 {
+            background: var(--ink);
+        }
+
+        #s12 .s12-brand {
+            font-family: var(--serif-tc);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--paper);
+            letter-spacing: 5px;
+        }
+
+        #s12 .s12-brand-en {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--kraft);
+        }
+
+        #s12 .s12-divider {
+            border: none;
+            border-top: 1px solid rgba(237, 234, 226, 0.1);
+            margin: 1.25rem 0;
+        }
+
+        #s12 .s12-nav-link {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #7d786c;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        #s12 .s12-nav-link:hover {
+            color: var(--paper);
+        }
+
+        #s12 .s12-copyright {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #5c5850;
+        }
+
+        #s12 .s12-social a {
+            color: #5c5850;
+            font-size: 14px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        #s12 .s12-social a:hover {
+            color: var(--paper);
+        }
+
+        /* =====================================================
+           手機版
+           ===================================================== */
+        @media (max-width: 768px) {
+            .ode-hero-label {
+                left: 1rem;
+                right: 1rem;
+                bottom: 4rem;
+                max-width: none;
+                padding: 1.1rem 1.2rem 1rem;
+            }
+
+            .ode-hero-label .hl-name {
+                font-size: 21px;
+            }
+
+            .s05-timeline-section::before {
+                left: 0;
+            }
+
+            .s05-timeline-pointer::before {
+                left: 4px;
+                transform: translate(0, -50%) rotate(45deg);
+            }
+
+            .s05-step-text,
+            .s05-img {
+                margin-left: 32px;
+            }
+
+            .s05-step-title,
+            .s05-step-label,
+            .s05-divider {
+                margin-left: 18px;
+            }
+
+            #s06 .s06-col {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+                padding: 2rem 1rem;
+            }
+
+            #s06 .s06-col:last-child {
+                border-bottom: none;
+            }
+
+            #s07 {
+                min-height: auto;
+            }
+
+            #s07 .s07-img-col {
+                position: static !important;
+                height: 260px;
+                width: 100%;
+            }
+
+            #s07 .s07-img-col::after {
+                background: linear-gradient(to bottom,
+                        rgba(228, 224, 212, 0) 55%,
+                        rgba(228, 224, 212, 0.95) 100%);
+            }
+
+            #s07 > .row {
+                position: static;
+            }
+
+            #s07 .s07-text-col {
+                padding: 2rem 1.5rem;
+            }
+
+            #s07 .container .row {
+                justify-content: flex-start !important;
+            }
+
+            #s07 .col-md-7 {
+                width: 100%;
+            }
+
+            #s09 {
+                min-height: auto;
+            }
+
+            #s09 .s09-img-col {
+                position: static !important;
+                right: auto;
+                height: 240px;
+                width: 100%;
+            }
+
+            #s09 .s09-img-col::after {
+                background: linear-gradient(to bottom,
+                        rgba(237, 234, 226, 0) 55%,
+                        rgba(237, 234, 226, 0.95) 100%);
+            }
+
+            #s09 .s09-text {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- section 2 | NavBar -->
+    <nav class="navbar navbar-expand-lg ode-navbar sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#">
+                香作所<span class="brand-en">ATELIER ODE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#s03">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#s07">品牌故事</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#s05">訂製香氛</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">限定企劃</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">季節限定香調</a></li>
+                            <li><a class="dropdown-item" href="#">企業訂製禮盒</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button class="ode-btn ode-btn-solid" style="padding: 8px 20px;" data-bs-toggle="modal"
+                        data-bs-target="#registerModal">註冊</button>
+                    <button class="ode-btn" style="padding: 8px 20px;" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">登入</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- registerModal -->
+    <div class="modal fade" id="registerModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <div class="ode-stamp">ODE<br>N°00</div>
+                    <div>
+                        <h1 class="ode-modal-title" id="registerModalLabel">會員註冊</h1>
+                        <span class="ode-modal-sub">Member Registration — Atelier Ode</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-0">
+                        <!-- 左欄：條款 -->
+                        <div class="col-md-6 ode-terms-col">
+                            <div class="ode-section-label">Terms 會員條款</div>
+                            <div class="ode-terms-text">
+                                <p>加入香作所會員即表示您同意我們的服務條款與隱私政策，個人資料將依法妥善保護。</p>
+                                <p>會員享有調香體驗優先預約、香氛積分回饋、季節限定香調通知等權益，詳情以官方公告為準。</p>
+                                <p>請勿將帳號轉讓或分享他人使用。如發現異常登入，請立即聯繫客服。</p>
+                                <p>香作所保留修改服務條款之權利，修改後將以電子郵件通知會員。</p>
+                                <p>如有疑問，請洽客服信箱 hello@atelierode.tw。</p>
+                            </div>
+                        </div>
+
+                        <!-- 右欄：表單 -->
+                        <div class="col-md-6 ode-form-col">
+                            <div class="ode-section-label">Register 填寫資料</div>
+                            <div class="ode-field">
+                                <label class="ode-label" for="regAccount">Account 帳號</label>
+                                <input class="ode-input" type="text" id="regAccount" placeholder="請輸入帳號">
+                            </div>
+                            <div class="ode-field">
+                                <label class="ode-label" for="regPassword">Password 密碼</label>
+                                <input class="ode-input" type="password" id="regPassword" placeholder="請輸入密碼">
+                            </div>
+                            <div class="ode-field">
+                                <label class="ode-label" for="regConfirm">Confirm 確認密碼</label>
+                                <input class="ode-input" type="password" id="regConfirm" placeholder="請再次輸入密碼">
+                            </div>
+                            <div class="ode-field">
+                                <label class="ode-label" for="regEmail">Email 電子信箱</label>
+                                <input class="ode-input" type="email" id="regEmail" placeholder="example@mail.com">
+                            </div>
+                            <div class="ode-check-row">
+                                <input class="ode-check" type="checkbox" id="agreeChk">
+                                <label class="ode-check-label" for="agreeChk">我已詳閱並同意上述會員條款</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="ode-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="ode-btn ode-btn-solid">確認註冊</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- loginModal -->
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <div class="ode-stamp">ODE<br>N°01</div>
+                    <div>
+                        <h1 class="ode-modal-title" id="loginModalLabel">會員登入</h1>
+                        <span class="ode-modal-sub">Member Login — Atelier Ode</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="ode-field">
+                        <label class="ode-label" for="loginAccount">Account 帳號</label>
+                        <input class="ode-input" type="text" id="loginAccount" placeholder="請輸入帳號">
+                    </div>
+                    <div class="ode-field" style="margin-bottom: 0;">
+                        <label class="ode-label" for="loginPassword">Password 密碼</label>
+                        <input class="ode-input" type="password" id="loginPassword" placeholder="請輸入密碼">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="ode-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="ode-btn ode-btn-solid">確認登入</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- section 3 | Hero carousel -->
+    <section id="s03">
+        <div id="carouselHero" class="carousel slide ode-carousel" data-bs-ride="carousel">
+
+            <!-- 簽名元素：配方標籤卡（不隨輪播移動） -->
+            <div class="ode-hero-label">
+                <div class="hl-no">Eau de Parfum — N°21</div>
+                <h1 class="hl-name">霧木 21</h1>
+                <div class="hl-en">Brume de Bois, twenty-one</div>
+                <div class="hl-meta">
+                    Formulated &amp; hand-blended in<br>
+                    Taichung, Taiwan — Batch 26/07<br>
+                    50 ml ／ e 1.7 fl. oz.
+                </div>
+            </div>
+
+            <!-- indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+
+            <!-- slides -->
+            <div class="carousel-inner">
+                <div class="carousel-item active"
+                    style="background-image: url(https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1600&q=80);">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url(https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=1600&q=80);">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url(https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=1600&q=80);">
+                </div>
+            </div>
+
+            <!-- 控制按鈕 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselHero" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- section 4 | 品牌數據 -->
+    <section id="s04">
+        <div class="row g-0">
+            <!-- 左欄：圖片 -->
+            <div class="col-md-5 s04-img-col"></div>
+            <!-- 右欄：文字 + 數字 -->
+            <div class="col-md-7 s04-text-col">
+                <div class="ode-tag">Est. 2026 — Taichung, Taiwan</div>
+                <h2 class="s04-headline">一瓶一署名</h2>
+                <div class="s04-divider"></div>
+
+                <p class="s04-award">每一瓶香氛皆於台中工作室手工調和、標註批號與調製日期</p>
+                <p class="s04-award">原料公開全成分，拒絕動物實驗，酒精基底取自台灣甘蔗</p>
+                <p class="s04-award">2026 亞洲獨立調香賞　最優秀新銳品牌 受賞</p>
+
+                <!-- 數字列 -->
+                <div class="row s04-stats-row g-0">
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">Origins 原料產地</div>
+                        <div class="s04-stat-number01">24<span>處</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">Formulas 常態香調</div>
+                        <div class="s04-stat-number02">33<span>款</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">Maceration 熟成天數</div>
+                        <div class="s04-stat-number03">21<span>日</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">Experience 調香資歷</div>
+                        <div class="s04-stat-number04">18<span>年</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- section 5 | 時間軸排版 訂香流程 -->
+    <section id="s05">
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s05-main-title-en">How to Order</p>
+                <h2 class="s05-main-title">訂香五序</h2>
+                <div class="s05-main-divider"></div>
+            </div>
+
+            <div class="s05-timeline-section">
+
+                <!-- 步驟 01：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 01</p>
+                        <h3 class="s05-step-title">預約試香</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">於線上預約到店時段，或直接於門市登記候位。</p>
+                        <p class="s05-step-text">每組試香為時四十五分鐘，由駐店調香師一對一引導。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&q=80"
+                            alt="預約到店試香">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 02：圖左、文字右 -->
+                <div class="row align-items-center flex-row-reverse s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 02</p>
+                        <h3 class="s05-step-title">聞香定調</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">從三十三款常態香調中盲聞挑選，不看名字，只憑直覺。</p>
+                        <p class="s05-step-text">調香師將依您的偏好收斂至前中後三個香階的基礎組合。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1615160460366-2c9a4c1f2f14?w=800&q=80"
+                            alt="盲聞試香定調">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 03：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 03</p>
+                        <h3 class="s05-step-title">現場調和</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">確認配方後，調香師於工作台現場秤量、調和您的香氛。</p>
+                        <p class="s05-step-text">全程可觀看，每個原料的比例與來源皆逐一說明。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1608528577891-eb055944f2e7?w=800&q=80"
+                            alt="工作台現場調和">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 04：圖左、文字右 -->
+                <div class="row align-items-center flex-row-reverse s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 04</p>
+                        <h3 class="s05-step-title">靜置熟成</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">調和後的香氛需於恆溫暗室靜置二十一日，讓香階融合沉澱。</p>
+                        <p class="s05-step-text">熟成期間您將收到進度通知，也可隨時查詢批號狀態。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&q=80"
+                            alt="恆溫暗室熟成">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 05：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 05</p>
+                        <h3 class="s05-step-title">署名交付</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">瓶身標籤將印上您指定的署名、批號與調製日期。</p>
+                        <p class="s05-step-text">可到店自取或以恆溫包裝寄送，配方永久留存供回購。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=800&q=80"
+                            alt="署名標籤交付">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 6 | 品牌三原則 -->
+    <section id="s06">
+        <div class="container">
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="ode-eyebrow">Our Principles</p>
+                <h2 class="s06-main-title">香作三原則</h2>
+                <div class="s06-main-divider"></div>
+            </div>
+            <div class="row">
+                <!-- 欄 01 -->
+                <div class="col-md-4 text-center s06-col">
+                    <div class="s06-num">i.</div>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">誠實成分</div>
+                    <p class="s06-card-text">每瓶香氛的全成分與原料產地皆印於標籤與官網，不使用「獨家秘方」迴避揭露。您噴上的每一滴，都知道它從哪裡來。</p>
+                </div>
+                <!-- 欄 02 -->
+                <div class="col-md-4 text-center s06-col">
+                    <div class="s06-num">ii.</div>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">小批手作</div>
+                    <p class="s06-card-text">拒絕預製香精大量灌裝，每批調和不超過六十瓶，並標註批號與日期。新鮮調製，是香氣層次最誠實的保證。</p>
+                </div>
+                <!-- 欄 03 -->
+                <div class="col-md-4 text-center s06-col">
+                    <div class="s06-num">iii.</div>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">無多餘之物</div>
+                    <p class="s06-card-text">素面玻璃瓶、再生紙標籤、無緞帶無膜盒。我們把成本留給原料，把體面留給香氣本身，而非包裝。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 7 | 品牌故事 -->
+    <section id="s07" class="position-relative" style="min-height: 540px;">
+
+        <!-- 左欄：固定背景圖 -->
+        <div class="row">
+            <div class="col-md-5 position-absolute top-0 bottom-0 s07-img-col" style="background-image: url('https://images.unsplash.com/photo-1616604743841-2a2f66d13e05?w=900&q=80');
+               background-position: center center;
+               background-size: cover;">
+            </div>
+        </div>
+
+        <!-- 右欄：文字 -->
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-md-7 s07-text-col">
+
+                    <p class="ode-eyebrow">Our Story</p>
+                    <h3 class="s07-headline">氣味是最誠實的記憶</h3>
+                    <div class="s07-divider"></div>
+
+                    <p class="s07-body">
+                        香作所創立於 2026 年，由一位在格拉斯調香工坊工作十八年的台灣調香師返鄉設立。她帶回的不是配方，而是一種信念——香氛不該是被行銷語言包裝的奢侈品，而是誠實的手工藝。我們拒絕預製香精與大量灌裝的商業模式，堅持從原料溯源、比例調和到熟成裝瓶的每一個環節，皆於台中工作室由人手完成。
+                    </p>
+
+                    <button class="ode-btn mb-4">閱讀完整故事</button>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <div class="s07-sub-title">Sourcing 產地直採</div>
+                            <p class="s07-sub-text">與二十四處原料產地直接合作，從南投檜木、恆春月桃到普羅旺斯薰衣草，每季親訪確認品質。</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="s07-sub-title">Craft 格拉斯工法</div>
+                            <p class="s07-sub-text">沿用南法傳統低溫調和工序，二十一日靜置熟成，拒絕以加速工藝取代時間本身。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 8 | 會員等級 -->
+    <section id="s08">
+        <div class="container">
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s05-main-title-en">Membership</p>
+                <h2 class="s08-main-title">會員層階</h2>
+                <div class="s08-main-divider"></div>
+            </div>
+            <div class="row g-3">
+                <!-- 一般會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-no">i.</div>
+                        <div>
+                            <p class="s08-member-label">General Member</p>
+                            <h3 class="s08-member-title">一般會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">完成註冊即自動成為一般會員。享有試香預約優先通知、生日月份香氛九折優惠，以及每次消費累積香作積分。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 銀標會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-no">ii.</div>
+                        <div>
+                            <p class="s08-member-label">Silver Label</p>
+                            <h3 class="s08-member-title">銀標會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">年度消費滿 NT$5,000 自動晉升。除一般會員權益外，另享季節香調搶先試香、指定品項八五折，以及調香體驗優先預約資格。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 金標會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-no">iii.</div>
+                        <div>
+                            <p class="s08-member-label">Gold Label</p>
+                            <h3 class="s08-member-title">金標會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">年度消費滿 NT$15,000 或受邀入會。享有調香師一對一香調諮詢、限量原料小批購買資格，以及每季寄送試香卡一組。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 墨標會員（最頂級）-->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card s08-card-elite d-flex align-items-start gap-3">
+                        <div class="s08-no">iv.</div>
+                        <div>
+                            <div class="s08-elite-badge">Invitation Only</div>
+                            <p class="s08-member-label">Ink Label</p>
+                            <h3 class="s08-member-title">墨標會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">僅限受邀，無法自行申請。享有年度私人調香夜入場資格、專屬訂製配方永久封存，以及創辦調香師親筆署名的典藏香品一套。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 9 | 產品規格 -->
+    <section id="s09" class="position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 s09-text">
+                    <!-- 區塊標題 -->
+                    <p class="ode-eyebrow">Specifications</p>
+                    <h3 class="s09-headline">香作規格一覽</h3>
+                    <div class="s09-divider"></div>
+
+                    <!-- 規格 dl 表 -->
+                    <dl class="s09-dl">
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Origins 原料來源</dt>
+                            <dd class="col-sm-8 s09-dd">二十四處直採產地，涵蓋南投檜木、恆春月桃、格拉斯玫瑰與卡拉布里亞佛手柑，每批附產地證明。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Concentration 濃度</dt>
+                            <dd class="col-sm-8 s09-dd">Eau de Parfum 標準，香精濃度 18–22%，依香調結構個別設定，絕不統一稀釋。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Formulas 品項數量</dt>
+                            <dd class="col-sm-8 s09-dd">常態供應 33 款香調，季節限定每季更新，最多同時上架 4 款限定。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Sizes 容量選擇</dt>
+                            <dd class="col-sm-8 s09-dd">15 ml 旅行裝／50 ml 標準裝／100 ml 典藏裝，另供 10 ml 補充回裝服務。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Maceration 熟成</dt>
+                            <dd class="col-sm-8 s09-dd">所有香氛於 15°C 恆溫暗室靜置熟成二十一日，瓶身標註批號與調製日期。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">Packaging 包裝</dt>
+                            <dd class="col-sm-8 s09-dd">素面回收玻璃瓶、再生紙標籤與紙盒，不含塑膠膜與緞帶，全品項拒絕動物實驗。</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 右欄圖片（absolute 靠右） -->
+            <div class="row justify-content-end">
+                <div class="col-md-5 s09-img-col"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 10 | 調香體驗預約 -->
+    <section id="s10">
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s05-main-title-en">Reservation</p>
+                <h2 class="s10-main-title">調香體驗預約</h2>
+                <div class="s10-main-divider"></div>
+            </div>
+
+            <div class="row my-5 align-items-start g-5">
+                <!-- 左欄：地圖 -->
+                <div class="col-md-6">
+                    <iframe class="s10-map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.0342014645657!2d120.6075480764066!3d24.170533278386056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693e048d342aa9%3A0x2b6f18a6783fa3b!2z5Yue5YuV6YOo5Yue5YuV5Yqb55m85bGV572y5Lit5b2w5oqV5YiG572y77yI6Ie65Lit6IG36KiT5bGA77yJ!5e0!3m2!1szh-TW!2stw!4v1782711113390!5m2!1szh-TW!2stw"
+                        width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin">
+                    </iframe>
+                </div>
+                <!-- 右欄：表單 -->
+                <div class="col-md-6">
+                    <p class="s10-form-label">填寫預約資料</p>
+                    <div class="s10-form-divider"></div>
+                    <p class="s10-form-note">請填寫以下資料，我們將於 24 小時內以電子郵件或電話確認您的預約時段。<br>每組試香體驗為時 45 分鐘，最多兩位同行。</p>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">Name 姓名</label>
+                        <input type="text" class="ode-input" placeholder="請輸入您的姓名">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">Phone 聯絡電話</label>
+                        <input type="tel" class="ode-input" placeholder="請輸入聯絡電話">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">Email 電子信箱</label>
+                        <input type="email" class="ode-input" placeholder="example@mail.com">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">Guests 來訪人數</label>
+                        <input type="number" class="ode-input" placeholder="請輸入人數（1–2 人）" min="1" max="2">
+                    </div>
+
+                    <div class="s10-check-row">
+                        <input type="checkbox" class="ode-check" id="giftChk">
+                        <label class="ode-check-label" for="giftChk">此次體驗為贈禮用途（將附贈署名試香卡）</label>
+                    </div>
+
+                    <button type="button" class="ode-btn ode-btn-light" style="padding: 12px 36px;">
+                        送出預約
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 11 | 人才招募 -->
+    <section id="s11">
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center mb-5">
+                <p class="ode-eyebrow">Join Our Atelier</p>
+                <h2 class="s11-headline" style="font-size:28px;">職人招募</h2>
+                <div style="width:40px; height:1px; background:#26241f; margin:16px auto 0;"></div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+
+                    <div class="s11-badge">Now Hiring — 人才招募</div>
+                    <h2 class="s11-headline">助理調香師</h2>
+                    <p class="s11-sub-en">Assistant Perfumer — Full Time</p>
+                    <div class="s11-divider"></div>
+
+                    <!-- 工作內容 -->
+                    <p class="s11-item-title">Responsibilities 工作內容</p>
+                    <p class="s11-item-text">
+                        · 依配方標準秤量、調和各式香氛，包含木質系、柑橘系、麝香系品項<br>
+                        · 管理原料庫存與熟成室溫濕度紀錄，確保批次品質穩定一致<br>
+                        · 協助季節新香調試作與配方調整<br>
+                        · 配合工作室排班，參與每月一次調香技術交流會議
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 待遇條件 -->
+                    <p class="s11-item-title">Compensation 薪資待遇</p>
+                    <p class="s11-item-text">
+                        · 月薪 NT$34,000 起，依經驗調整（最高 NT$48,000）<br>
+                        · 到職三個月後享有勞健保、特休假<br>
+                        · 每季調薪評估制度，表現優異者可晉升駐店調香師<br>
+                        · 提供國際調香認證課程，費用由公司全額補助
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 希望條件 -->
+                    <p class="s11-item-title">Requirements 希望條件</p>
+                    <p class="s11-item-text">
+                        · 對香氛或原料調配有熱忱，不需相關經驗（可培訓）<br>
+                        · 嗅覺敏銳、做事細心，能在安靜穩定的環境中長期工作<br>
+                        · 有化妝品、精油或餐飲調製相關經驗者尤佳<br>
+                        · 可配合平日班與假日輪班
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <button type="button" class="ode-btn ode-btn-solid" style="padding: 12px 36px;">
+                        加入我們
+                    </button>
+
+                </div>
+                <div class="col-md-6">
+
+                    <div class="s11-badge">Now Hiring — 人才招募</div>
+                    <h2 class="s11-headline">門市香氛顧問</h2>
+                    <p class="s11-sub-en">Fragrance Consultant — Full Time / Part Time</p>
+                    <div class="s11-divider"></div>
+
+                    <!-- 工作內容 -->
+                    <p class="s11-item-title">Responsibilities 工作內容</p>
+                    <p class="s11-item-text">
+                        · 迎接來客，引導盲聞試香流程並說明香調結構與原料故事<br>
+                        · 協助顧客完成線上預約與訂製流程，照顧不熟悉操作的來客<br>
+                        · 負責試香台整理、試香紙補充與門市環境維護<br>
+                        · 協助取件訂單批號核對，維持交付流程順暢
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 待遇條件 -->
+                    <p class="s11-item-title">Compensation 薪資待遇</p>
+                    <p class="s11-item-text">
+                        · 全職月薪 NT$30,000 起，依經驗調整<br>
+                        · 兼職時薪 NT$190 起，排班彈性可討論<br>
+                        · 到職三個月後享有勞健保、特休假（全職）<br>
+                        · 員工購物享七五折優惠，每季提供訂製香氛體驗乙次
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 希望條件 -->
+                    <p class="s11-item-title">Requirements 希望條件</p>
+                    <p class="s11-item-text">
+                        · 親切有禮，善於傾聽與描述，喜歡與人分享感受<br>
+                        · 對香氛、美學或生活風格有興趣者尤佳，不需相關經驗<br>
+                        · 具備基本中文溝通能力，會英文或法文者加分<br>
+                        · 可配合週末及例假日排班（至少每週一個假日）
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <button type="button" class="ode-btn ode-btn-solid" style="padding: 12px 36px;">
+                        加入我們
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 12 | Footer -->
+    <section id="s12">
+        <footer class="py-5">
+            <div class="container">
+
+                <div class="row align-items-center mb-3">
+                    <!-- 品牌名稱 -->
+                    <div class="col-md-4">
+                        <div class="s12-brand">香作所</div>
+                        <div class="s12-brand-en mt-1">Atelier Ode — Handcrafted Fragrance, Est. 2026, Taichung</div>
+                    </div>
+
+                    <!-- 頁內導覽 -->
+                    <div class="col-md-4 text-center d-none d-md-block">
+                        <div class="d-flex justify-content-center gap-4 flex-wrap">
+                            <a href="#s03" class="s12-nav-link">首頁</a>
+                            <a href="#s07" class="s12-nav-link">品牌故事</a>
+                            <a href="#s05" class="s12-nav-link">訂香流程</a>
+                            <a href="#s08" class="s12-nav-link">會員層階</a>
+                            <a href="#s10" class="s12-nav-link">體驗預約</a>
+                            <a href="#s11" class="s12-nav-link">職人招募</a>
+                        </div>
+                    </div>
+
+                    <!-- 社群連結 -->
+                    <div class="col-md-4 text-md-end text-start mt-3 mt-md-0">
+                        <div class="s12-social d-flex gap-3 justify-content-md-end">
+                            <a href="#" aria-label="LINE"><i class="fa-brands fa-line fa-lg"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram fa-lg"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fa-brands fa-square-facebook fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="s12-divider">
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                    <p class="s12-copyright mb-0">
+                        © 2026 香作所 Atelier Ode. All rights reserved.
+                    </p>
+                    <p class="s12-copyright mb-0">
+                        hello@atelierode.tw ／ Tel. 04-2000-0000
+                    </p>
+                </div>
+
+            </div>
+        </footer>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
+    <script>
+        // 數字跳動效果
+        const counterUp = window.counterUp.default
+
+        const callback = entries => {
+            entries.forEach(entry => {
+                const el = entry.target
+                if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+                    counterUp(el, {
+                        duration: 500,
+                        delay: 16,
+                    })
+                    el.classList.add('is-visible')
+                }
+            })
+        }
+
+        const IO = new IntersectionObserver(callback, { threshold: 1 })
+
+        const els = document.querySelectorAll('.s04-stat-number01, .s04-stat-number02, .s04-stat-number03, .s04-stat-number04')
+        els.forEach(el => IO.observe(el))
+    </script>
+</body>
+
+</html>

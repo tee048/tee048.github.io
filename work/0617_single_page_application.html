@@ -1,0 +1,2592 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>茶道屋 CHADOYA — 日式手作飲品</title>
+
+    <style>
+        /* ===== registerModal 自訂風格 ===== */
+
+        /* 背景遮罩加深，搭配深墨褐 */
+        #rigisterModal .modal-dialog {
+            max-width: 720px;
+        }
+
+        #rigisterModal .modal-content {
+            border: 1px solid #c9a84c;
+            border-radius: 2px;
+            background: #f5f0e8;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #1a1208;
+            overflow: hidden;
+        }
+
+        /* ── Header ── */
+        #rigisterModal .modal-header {
+            background: #1a1208;
+            border-bottom: 2px solid #c9a84c;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cha-stamp {
+            width: 38px;
+            height: 38px;
+            border: 2px solid #c9a84c;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 10px;
+            color: #c9a84c;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .cha-title-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .cha-title-jp {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: #f5f0e8;
+            letter-spacing: 4px;
+            margin: 0;
+        }
+
+        .cha-title-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 2px;
+        }
+
+        #rigisterModal .btn-close {
+            filter: invert(70%) sepia(20%) saturate(400%) hue-rotate(5deg);
+            opacity: 0.6;
+            margin-left: auto;
+        }
+
+        #rigisterModal .btn-close:hover {
+            opacity: 1;
+        }
+
+        /* ── Body ── */
+        #rigisterModal .modal-body {
+            padding: 0;
+            background: #f5f0e8;
+        }
+
+        #rigisterModal .modal-body .row {
+            margin: 0;
+        }
+
+        /* 左欄：條款 */
+        .cha-terms-col {
+            padding: 1.4rem 1.25rem 1.4rem 1.5rem;
+            background: #ede8dc;
+            border-right: 1px solid #d9d0be;
+        }
+
+        .cha-section-label {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 11px;
+            font-weight: 400;
+            color: #8a7a5a;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cha-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #c9a84c;
+            opacity: 0.45;
+        }
+
+        .cha-terms-text {
+            font-size: 11.5px;
+            color: #5a4a2a;
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        .cha-terms-text p {
+            margin: 0 0 9px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid #d9d0be;
+        }
+
+        .cha-terms-text p:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* 右欄：表單 */
+        .cha-form-col {
+            padding: 1.4rem 1.5rem 1.4rem 1.25rem;
+            background: #f5f0e8;
+        }
+
+        .cha-field {
+            margin-bottom: 11px;
+        }
+
+        .cha-label {
+            display: block;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 10px;
+            color: #8a7a5a;
+            letter-spacing: 2.5px;
+            margin-bottom: 4px;
+        }
+
+        .cha-input {
+            width: 100%;
+            padding: 7px 10px;
+            background: #f5f0e8;
+            border: none;
+            border-bottom: 1px solid #c9a84c;
+            border-radius: 0;
+            font-size: 13px;
+            color: #1a1208;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+            box-sizing: border-box;
+        }
+
+        .cha-input:focus {
+            border-bottom-color: #1a1208;
+            background: #ffffff;
+        }
+
+        .cha-input::placeholder {
+            color: #bba98a;
+            font-size: 12px;
+        }
+
+        /* Checkbox 行 */
+        .cha-check-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #d9d0be;
+        }
+
+        .cha-check {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #c9a84c;
+            background: #f5f0e8;
+            appearance: none;
+            -webkit-appearance: none;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .cha-check:checked {
+            background: #1a1208;
+        }
+
+        .cha-check:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -1px;
+            left: 1px;
+            font-size: 11px;
+            color: #c9a84c;
+        }
+
+        .cha-check-label {
+            font-size: 11px;
+            color: #5a4a2a;
+            letter-spacing: 1px;
+            font-weight: 300;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        /* ===== Navbar 自訂配色 ===== */
+
+        .cha-navbar {
+            background-color: #1a1208 !important;
+            border-bottom: 1px solid #2e2212;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+        }
+
+        .cha-navbar .navbar-brand {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #f5f0e8 !important;
+            letter-spacing: 3px;
+        }
+
+        .cha-navbar .navbar-brand:hover {
+            color: #c9a84c !important;
+        }
+
+        .cha-navbar .nav-link {
+            font-size: 13px;
+            color: #b0a08a !important;
+            letter-spacing: 1.5px;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .cha-navbar .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 1px;
+            background: #c9a84c;
+            transform: scaleX(0);
+            transition: transform 0.2s;
+        }
+
+        .cha-navbar .nav-link:hover,
+        .cha-navbar .nav-link.active {
+            color: #f5f0e8 !important;
+        }
+
+        .cha-navbar .nav-link:hover::after,
+        .cha-navbar .nav-link.active::after {
+            transform: scaleX(1);
+        }
+
+        /* dropdown */
+        .cha-navbar .dropdown-menu {
+            background: #1a1208;
+            border: 1px solid #2e2212;
+            border-top: 2px solid #c9a84c;
+            border-radius: 0;
+            padding: 0.25rem 0;
+        }
+
+        .cha-navbar .dropdown-item {
+            font-size: 12px;
+            color: #b0a08a;
+            letter-spacing: 1.5px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+            padding: 0.5rem 1.25rem;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .cha-navbar .dropdown-item:hover,
+        .cha-navbar .dropdown-item.active,
+        .cha-navbar .dropdown-item:active {
+            background: #2e2212;
+            color: #c9a84c;
+        }
+
+        /* toggler */
+        .cha-navbar .navbar-toggler {
+            border-color: #3a2e1a;
+        }
+
+        .cha-navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23c9a84c' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* 按鈕：註冊 */
+        .cha-btn-register {
+            background: #c9a84c;
+            border: 1px solid #c9a84c;
+            color: #1a1208;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            padding: 5px 16px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .cha-btn-register:hover {
+            background: #e8c060;
+            border-color: #e8c060;
+        }
+
+        /* 按鈕：登入 */
+        .cha-btn-login {
+            background: none;
+            border: 1px solid #c9a84c;
+            color: #c9a84c;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            padding: 5px 16px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .cha-btn-login:hover {
+            background: #c9a84c;
+            color: #1a1208;
+        }
+
+        /* ── Footer ── */
+        #rigisterModal .modal-footer {
+            background: #1a1208;
+            border-top: 1px solid #2e2212;
+            padding: 0.85rem 1.5rem;
+            gap: 8px;
+        }
+
+        .cha-btn-cancel {
+            background: none;
+            border: 1px solid #3a2e1a;
+            color: #8a7a5a;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            padding: 6px 18px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .cha-btn-cancel:hover {
+            border-color: #8a7a5a;
+            color: #c9a84c;
+        }
+
+        .cha-btn-confirm {
+            background: #c9a84c;
+            border: 1px solid #c9a84c;
+            color: #1a1208;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            padding: 6px 22px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cha-btn-confirm:hover {
+            background: #e8c060;
+            border-color: #e8c060;
+        }
+
+        /* ===== loginModal 自訂風格 ===== */
+
+        #loginModal .modal-dialog {
+            max-width: 380px;
+        }
+
+        #loginModal .modal-content {
+            border: 1px solid #c9a84c;
+            border-radius: 2px;
+            background: #f5f0e8;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #1a1208;
+            overflow: hidden;
+        }
+
+        #loginModal .modal-header {
+            background: #1a1208;
+            border-bottom: 2px solid #c9a84c;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cha-login-stamp {
+            width: 38px;
+            height: 38px;
+            border: 2px solid #c9a84c;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 10px;
+            color: #c9a84c;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        #loginModal .modal-body {
+            padding: 1.5rem 1.5rem 0.5rem;
+            background: #f5f0e8;
+        }
+
+        #loginModal .modal-footer {
+            background: #1a1208;
+            border-top: 1px solid #2e2212;
+            padding: 0.85rem 1.5rem;
+            gap: 8px;
+        }
+
+        /* ===== Carousel 配色 ===== */
+
+        .cha-carousel {
+            position: relative;
+        }
+
+        /* 每張圖片疊暖褐漸層，統一色溫 */
+        .cha-carousel .carousel-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(26, 18, 8, 0.25) 0%,
+                    rgba(26, 18, 8, 0.05) 40%,
+                    rgba(26, 18, 8, 0.05) 60%,
+                    rgba(26, 18, 8, 0.45) 100%);
+            pointer-events: none;
+        }
+
+        /* indicators：金色細線，active 時加寬 */
+        .cha-carousel .carousel-indicators {
+            margin-bottom: 1.25rem;
+            gap: 6px;
+        }
+
+        .cha-carousel .carousel-indicators [data-bs-target] {
+            width: 28px;
+            height: 2px;
+            border-radius: 0;
+            background-color: rgba(201, 168, 76, 0.4);
+            border: none;
+            transition: background-color 0.3s, width 0.3s;
+            opacity: 1;
+        }
+
+        .cha-carousel .carousel-indicators .active {
+            background-color: #c9a84c;
+            width: 44px;
+        }
+
+        /* 控制箭頭：墨褐底框 + 金框線 */
+        .cha-carousel .carousel-control-prev,
+        .cha-carousel .carousel-control-next {
+            width: 48px;
+            opacity: 1;
+        }
+
+        .cha-carousel .carousel-control-prev-icon,
+        .cha-carousel .carousel-control-next-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(26, 18, 8, 0.55);
+            border: 1px solid rgba(201, 168, 76, 0.5);
+            border-radius: 0;
+            background-size: 14px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .cha-carousel .carousel-control-prev:hover .carousel-control-prev-icon,
+        .cha-carousel .carousel-control-next:hover .carousel-control-next-icon {
+            background-color: rgba(26, 18, 8, 0.85);
+            border-color: #c9a84c;
+        }
+
+        /* 圖片固定高度裁切，加微飽和度壓制 */
+        .cha-carousel .carousel-item img {
+            height: 520px;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(0.85) sepia(0.1);
+        }
+
+        /* ===== Section 4 | 品牌數據 ===== */
+
+        #s04 {
+            background: #f5f0e8;
+            overflow: hidden;
+        }
+
+        /* ── s04 數字 class 補齊（讓 counterUp 樣式生效） ── */
+        .s04-stat-number01,
+        .s04-stat-number02,
+        .s04-stat-number03,
+        .s04-stat-number04 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 300;
+            color: #1a1208;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .s04-stat-number01 span,
+        .s04-stat-number02 span,
+        .s04-stat-number03 span,
+        .s04-stat-number04 span {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: #8a7a5a;
+            letter-spacing: 1px;
+            margin-left: 2px;
+        }
+
+        /* 左欄圖片 */
+        #s04 .s04-img-col {
+            min-height: 520px;
+            background-image: url(https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=900&q=80);
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* 左欄圖片上的暖褐漸層（跟 carousel 統一） */
+        #s04 .s04-img-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(26, 18, 8, 0.0) 60%,
+                    rgba(26, 18, 8, 0.35) 100%);
+            pointer-events: none;
+        }
+
+        /* 右欄文字區 */
+        #s04 .s04-text-col {
+            padding: 4rem 3rem 3rem 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 小標籤 */
+        #s04 .s04-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        /* 主標題 */
+        #s04 .s04-year {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: #8a7a5a;
+            letter-spacing: 4px;
+            margin-bottom: 4px;
+        }
+
+        #s04 .s04-headline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 38px;
+            font-weight: 600;
+            color: #1a1208;
+            letter-spacing: 6px;
+            line-height: 1.2;
+            margin: 0 0 16px;
+        }
+
+        /* 分隔線 */
+        #s04 .s04-divider {
+            width: 40px;
+            height: 2px;
+            background: #c9a84c;
+            margin-bottom: 20px;
+        }
+
+        /* 副文案 */
+        #s04 .s04-award {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: #5a4a2a;
+            letter-spacing: 2px;
+            line-height: 2;
+            margin: 0 0 6px;
+            padding-left: 12px;
+            border-left: 2px solid #c9a84c;
+        }
+
+        /* 數字區塊列 */
+        #s04 .s04-stats-row {
+            border-top: 1px solid #d9d0be;
+            padding-top: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        #s04 .s04-stat {
+            padding: 0 1rem 0 0;
+        }
+
+        #s04 .s04-stat-label {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 10px;
+            font-weight: 400;
+            color: #8a7a5a;
+            letter-spacing: 2.5px;
+            margin-bottom: 6px;
+        }
+
+        #s04 .s04-stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 300;
+            color: #1a1208;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        #s04 .s04-stat-number span {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: #8a7a5a;
+            letter-spacing: 1px;
+            margin-left: 2px;
+        }
+
+        /* ── s05 區塊標題 ── */
+        .s05-main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 6px;
+            margin-bottom: 4px;
+        }
+
+        .s05-main-title-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 13px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+        }
+
+        .s05-main-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 16px auto 60px;
+        }
+
+        /* ── 單一步驟 ── */
+        .s05-step-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        .s05-step-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: #f5f0e8;
+            letter-spacing: 3px;
+            margin: 0 0 10px;
+            padding-left: 14px;
+            border-left: 2px solid #c9a84c;
+        }
+
+        .s05-divider {
+            width: 28px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 0 14px 14px;
+            opacity: 0.6;
+        }
+
+        .s05-step-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: #b0a08a;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            padding-left: 14px;
+            margin: 0;
+        }
+
+        /* ── 圖片 ── */
+        .s05-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.8) sepia(0.15);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        /* ── 步驟分隔線 ── */
+        .s05-row-divider {
+            border: none;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+            margin: 3rem 0;
+        }
+
+        /* 深褐遮罩，壓住木紋讓文字清晰 */
+        #s05::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 18, 8, 0.80);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #s05 .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── 區塊標題 ── */
+        .s05-main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 6px;
+            margin-bottom: 4px;
+        }
+
+        .s05-main-title-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 13px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+        }
+
+        .s05-main-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 16px auto 60px;
+        }
+
+        /* ── 單一步驟 ── */
+        .s05-step-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        .s05-step-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: #f5f0e8;
+            letter-spacing: 3px;
+            margin: 0 0 10px;
+            padding-left: 14px;
+            border-left: 2px solid #c9a84c;
+        }
+
+        .s05-divider {
+            width: 28px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 0 14px 14px;
+            opacity: 0.6;
+        }
+
+        .s05-step-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: #b0a08a;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            padding-left: 14px;
+            margin: 0;
+        }
+
+        /* ── 圖片 ── */
+        .s05-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.8) sepia(0.15);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+        }
+
+        /* ── 步驟分隔線 ── */
+        .s05-row-divider {
+            border: none;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+            margin: 3rem 0;
+        }
+
+        .s05-timeline-section {
+            position: relative;
+        }
+
+        .s05-timeline-section::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            /* ← 改細一點更精緻 */
+            background-color: rgba(219, 208, 175, 0.87);
+            /* ← 改金色半透明 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .s05-timeline-pointer {
+            position: relative;
+        }
+
+        .s05-timeline-pointer::before {
+            position: absolute;
+            content: "";
+            width: 12px;
+            height: 12px;
+            top: 50%;
+            /* ← 改為垂直置中 */
+            transform: translate(-50%, -50%);
+            /* ← X 軸置中 + Y 軸修正 */
+            border-radius: 50%;
+            background-color: #c9a84c;
+            /* ← 改金色配品牌 */
+            border: 2px solid #f5f0e8;
+            /* ← 白邊讓圓點在深色背景更明顯 */
+            left: 50%;
+            z-index: 2;
+        }
+
+        /* ── s06 區塊標題 ── */
+        #s06 .s06-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s06 .s06-main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1208;
+            letter-spacing: 5px;
+            margin-bottom: 8px;
+        }
+
+        #s06 .s06-main-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 auto 3.5rem;
+        }
+
+        /* ── 單欄 ── */
+        #s06 .s06-col {
+            padding: 1.5rem 2.5rem;
+            border-right: 1px solid #d9d0be;
+        }
+
+        #s06 .s06-col:last-child {
+            border-right: none;
+        }
+
+        #s06 .s06-icon {
+            color: #c9a84c;
+            margin-bottom: 1.25rem;
+        }
+
+        #s06 .s06-icon-divider {
+            width: 24px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 auto 1rem;
+            opacity: 0.6;
+        }
+
+        #s06 .s06-card-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1208;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        #s06 .s06-card-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12.5px;
+            font-weight: 300;
+            color: #5a4a2a;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        /* ── s07 左欄圖片遮罩 ── */
+        #s07 .s07-img-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(237, 232, 220, 0.0) 55%,
+                    rgba(237, 232, 220, 0.9) 100%);
+            pointer-events: none;
+        }
+
+        /* ── s07 右欄文字 ── */
+        #s07 .s07-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s07 .s07-headline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #1a1208;
+            letter-spacing: 4px;
+            margin: 0 0 12px;
+        }
+
+        #s07 .s07-divider {
+            width: 32px;
+            height: 1px;
+            background: #c9a84c;
+            margin-bottom: 20px;
+        }
+
+        #s07 .s07-body {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: #5a4a2a;
+            line-height: 2.2;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        #s07 .s07-sub-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #c9a84c;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            padding-left: 10px;
+            border-left: 2px solid #c9a84c;
+        }
+
+        #s07 .s07-sub-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: #8a7a5a;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            padding-left: 12px;
+        }
+
+        #s07 .s07-text-col {
+            padding: 4rem 2rem 4rem 3rem;
+        }
+
+        /* ── s08 區塊標題 ── */
+        #s08 .s08-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s08 .s08-main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 5px;
+            margin-bottom: 8px;
+        }
+
+        #s08 .s08-main-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 auto 3.5rem;
+        }
+
+        #s08 .s08-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            padding: 1.75rem 1.5rem;
+            transition: transform 0.25s, border-color 0.25s;
+            height: 100%;
+        }
+
+        #s08 .s08-card:hover {
+            transform: translateY(-4px);
+            border-color: #c9a84c;
+        }
+
+        /* 黑卡專屬：金色邊框加強 + 底部暖光 */
+        #s08 .s08-card-elite {
+            background: rgba(201, 168, 76, 0.06);
+            border: 1px solid rgba(201, 168, 76, 0.6);
+            box-shadow: 0 0 24px rgba(201, 168, 76, 0.08);
+        }
+
+        #s08 .s08-card-elite:hover {
+            border-color: #e8c060;
+            box-shadow: 0 0 32px rgba(201, 168, 76, 0.15);
+        }
+
+        #s08 .s08-icon-wrap {
+            width: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 3px;
+        }
+
+        #s08 .s08-icon {
+            color: #c9a84c;
+        }
+
+        #s08 .s08-member-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            font-weight: 300;
+            color: #8a7a5a;
+            letter-spacing: 2.5px;
+            margin-bottom: 4px;
+        }
+
+        #s08 .s08-member-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 3px;
+            margin: 0 0 8px;
+        }
+
+        #s08 .s08-divider {
+            width: 24px;
+            height: 1px;
+            background: #c9a84c;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        #s08 .s08-member-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: #8a7a5a;
+            line-height: 2;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        /* 黑卡專屬：badge */
+        #s08 .s08-elite-badge {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 10px;
+            color: #1a1208;
+            background: #c9a84c;
+            letter-spacing: 2px;
+            padding: 2px 10px;
+            margin-bottom: 8px;
+        }
+
+        /* ── s09 圖片遮罩（從右往左，融入米白背景） ── */
+        #s09 .s09-img-col {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: auto;
+            background-image: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=900&q=80');
+            background-size: cover;
+            background-position: center center;
+        }
+
+        #s09 .s09-img-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to left,
+                    rgba(237, 232, 220, 0.0) 55%,
+                    rgba(237, 232, 220, 0.92) 100%);
+            pointer-events: none;
+        }
+
+        /* ── s09 文字欄 ── */
+        #s09 .s09-text {
+            padding: 4rem 2rem 4rem 0;
+        }
+
+        #s09 .s09-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s09 .s09-headline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1208;
+            letter-spacing: 4px;
+            margin: 0 0 10px;
+        }
+
+        #s09 .s09-divider {
+            width: 32px;
+            height: 1px;
+            background: #c9a84c;
+            margin-bottom: 2rem;
+        }
+
+        /* ── dl 規格表 ── */
+        #s09 .s09-dl {
+            border-top: 1px solid #d9d0be;
+        }
+
+        #s09 .s09-dl .row {
+            border-bottom: 1px solid #d9d0be;
+            padding: 0.75rem 0;
+            margin: 0;
+            align-items: baseline;
+        }
+
+        #s09 .s09-dt {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 11px;
+            font-weight: 400;
+            color: #c9a84c;
+            letter-spacing: 2.5px;
+        }
+
+        #s09 .s09-dd {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12.5px;
+            font-weight: 300;
+            color: #5a4a2a;
+            line-height: 1.9;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        /* ── s10 區塊標題 ── */
+        #s10 .s10-eyebrow {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s10 .s10-main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 5px;
+            margin-bottom: 8px;
+        }
+
+        #s10 .s10-main-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 auto 3.5rem;
+        }
+
+        /* ── 地圖 ── */
+        #s10 .s10-map {
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            display: block;
+            filter: sepia(0.3) saturate(0.6) brightness(0.85);
+        }
+
+        /* ── 右欄小標 ── */
+        #s10 .s10-form-label {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        #s10 .s10-form-divider {
+            width: 28px;
+            height: 1px;
+            background: #c9a84c;
+            opacity: 0.5;
+            margin-bottom: 1.5rem;
+        }
+
+        #s10 .s10-form-note {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 11.5px;
+            font-weight: 300;
+            color: #8a7a5a;
+            letter-spacing: 0.5px;
+            line-height: 1.9;
+            margin-bottom: 1.75rem;
+        }
+
+        /* ── input 覆寫 ── */
+        #s10 .cha-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.5);
+            border-radius: 0;
+            color: #f5f0e8;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            padding: 10px 2px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        #s10 .cha-input:focus {
+            border-bottom-color: #c9a84c;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        #s10 .cha-input::placeholder {
+            color: #5a4a2a;
+            font-size: 12px;
+        }
+
+        /* ── field wrapper ── */
+        #s10 .s10-field {
+            margin-bottom: 1.25rem;
+        }
+
+        #s10 .s10-field-label {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 10px;
+            color: #8a7a5a;
+            letter-spacing: 2.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* ── checkbox ── */
+        #s10 .s10-check-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        #s10 .cha-check {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #c9a84c;
+            background: transparent;
+            appearance: none;
+            -webkit-appearance: none;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        #s10 .cha-check:checked {
+            background: #c9a84c;
+        }
+
+        #s10 .cha-check:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -1px;
+            left: 1px;
+            font-size: 11px;
+            color: #1a1208;
+        }
+
+        #s10 .cha-check-label {
+            font-size: 11px;
+            color: #8a7a5a;
+            letter-spacing: 1px;
+            font-weight: 300;
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 0;
+        }
+
+        /* ── 深褐遮罩 ── */
+        #s11::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 18, 8, 0.82);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #s11 .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── badge ── */
+        #s11 .s11-badge {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            font-weight: 300;
+            color: #1a1208;
+            background: #c9a84c;
+            letter-spacing: 3px;
+            padding: 3px 14px;
+            margin-bottom: 14px;
+        }
+
+        /* ── 主標題 ── */
+        #s11 .s11-headline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #f5f0e8;
+            letter-spacing: 6px;
+            margin: 0 0 10px;
+        }
+
+        #s11 .s11-sub-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 13px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 0;
+        }
+
+        #s11 .s11-divider {
+            width: 40px;
+            height: 1px;
+            background: #c9a84c;
+            margin: 20px 0 28px;
+        }
+
+        /* ── 項目標題 ── */
+        #s11 .s11-item-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 11px;
+            font-weight: 400;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            padding-left: 10px;
+            border-left: 2px solid #c9a84c;
+        }
+
+        /* ── 項目內文 ── */
+        #s11 .s11-item-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12.5px;
+            font-weight: 300;
+            color: #b0a08a;
+            line-height: 2.1;
+            letter-spacing: 0.5px;
+            padding-left: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── 分隔線 ── */
+        #s11 .s11-item-divider {
+            border: none;
+            border-top: 1px solid rgba(201, 168, 76, 0.12);
+            margin: 0 0 1.5rem;
+        }
+
+        /* ── s12 footer ── */
+        #s12 {
+            background: #0f0b05;
+            border-top: 1px solid #2e2212;
+        }
+
+        #s12 .s12-brand {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #f5f0e8;
+            letter-spacing: 5px;
+        }
+
+        #s12 .s12-brand-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 11px;
+            font-weight: 300;
+            color: #c9a84c;
+            letter-spacing: 3px;
+        }
+
+        #s12 .s12-divider {
+            border: none;
+            border-top: 1px solid #2e2212;
+            margin: 1.25rem 0;
+        }
+
+        #s12 .s12-nav-link {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            color: #5a4a2a;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        #s12 .s12-nav-link:hover {
+            color: #c9a84c;
+        }
+
+        #s12 .s12-copyright {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 11px;
+            font-weight: 300;
+            color: #3a2e1a;
+            letter-spacing: 1.5px;
+        }
+
+        #s12 .s12-social a {
+            color: #3a2e1a;
+            font-size: 14px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        #s12 .s12-social a:hover {
+            color: #c9a84c;
+        }
+
+        /* 手機版 */
+        @media(max-width:768px) {
+            .s05-timeline-section::before {
+                left: 0px;
+            }
+
+            .s05-timeline-pointer::before {
+                left: 5px;
+                transform: none;
+            }
+
+            .s05-step-text,
+            .s05-img {
+                margin-left: 40px;
+            }
+
+            /* .s07-text {
+                z-index: 10;
+                background-color: #fff;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                border-radius: 15px;
+            } */
+
+            /* ── s07 手機版修正 ── */
+            #s07 {
+                min-height: auto;
+                /* 取消固定最小高度，讓內容自撐 */
+            }
+
+            #s07 .s07-img-col {
+                position: static !important;
+                /* 取消 absolute，回到文件流 */
+                height: 260px;
+                /* 給固定高度當圖片區塊 */
+                width: 100%;
+            }
+
+            #s07 .s07-img-col::after {
+                /* 手機版改為下方漸層，融入下方背景色 */
+                background: linear-gradient(to bottom,
+                        rgba(237, 232, 220, 0.0) 55%,
+                        rgba(237, 232, 220, 0.95) 100%);
+            }
+
+            /* row 不再需要撐高，讓圖片區塊自然佔位 */
+            #s07>.row {
+                position: static;
+            }
+
+            #s07 .s07-text-col,
+            .s09-text-col {
+                padding: 2rem 1.5rem;
+                /* 縮小 padding 適應窄螢幕 */
+            }
+
+            /* 右欄不再 justify-content-end 推到右側，手機全寬顯示 */
+            #s07 .container .row {
+                justify-content: flex-start !important;
+            }
+
+            #s07 .col-md-7 {
+                width: 100%;
+                /* 手機版佔滿全寬 */
+            }
+
+            #s09 {
+                min-height: auto;
+            }
+
+            #s09 .s09-img-col {
+                position: static !important;
+                right: auto;
+                height: 240px;
+                width: 100%;
+            }
+
+            #s09 .s09-img-col::after {
+                background: linear-gradient(to bottom,
+                        rgba(237, 232, 220, 0.0) 55%,
+                        rgba(237, 232, 220, 0.95) 100%);
+            }
+
+            #s09 .s09-text {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- section 1 | 社群連結   (改到最下方)
+    <section class="bg-light" id="s01">
+        <div class="container">
+            <div class="text-end py-3">
+                <a href="#"><i class="fa-brands fa-line fa-2x" style="color: rgb(45, 136, 94);"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram fa-2x" style="color: rgb(212, 28, 136);"></i></a>
+                <a href="#"><i class="fa-brands fa-square-facebook fa-2x" style="color: rgb(66, 130, 180);"></i></a>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- section 2 | NavBar -->
+    <nav class="navbar navbar-expand-lg cha-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-mug-hot me-2" aria-hidden="true"></i>茶道屋 CHADOYA
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <i class="fa-solid fa-house me-1" aria-hidden="true"></i>首頁
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-leaf me-1" aria-hidden="true"></i>品牌故事
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-mug-saucer me-1" aria-hidden="true"></i>開始點餐
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-tag me-1" aria-hidden="true"></i>限時優惠
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="20260525-1.html">
+                                    <i class="fa-solid fa-graduation-cap me-1" aria-hidden="true"></i>學生方案
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item active" href="20260601-orderList-ai02-uberEat.html">
+                                    <i class="fa-solid fa-briefcase me-1" aria-hidden="true"></i>企業團購
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button class="cha-btn-register" data-bs-toggle="modal" data-bs-target="#rigisterModal">
+                        <i class="fa-solid fa-registered me-1" aria-hidden="true"></i>註冊
+                    </button>
+                    <button class="cha-btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fa-solid fa-arrow-right-to-bracket me-1" aria-hidden="true"></i>登入
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- rigisterModal 原始架構 -->
+    <!-- <div class="modal fade" id="rigisterModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-bg-warning">
+                    <h1 class="modal-title fs-3 fw-bold" id="exampleModalLabel">會員註冊</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="fs-3">會員條款</div>
+                            <p>會員款內容 ai生成.....</p>
+                            <p>會員款內容 ai生成.....</p>
+                            <p>會員款內容 ai生成.....</p>
+                            <p>會員款內容 ai生成.....</p>
+                            <p>會員款內容 ai生成.....</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">帳號</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">密碼</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">確認密碼</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Email</label>
+                                <input type="email" class="form-control">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input">
+                                <label for="" class="form-check-label">遵守</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">確認註冊</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- registerModal AI 配色 -->
+    <div class="modal fade" id="rigisterModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="rigisterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <div class="cha-stamp">会員<br>登録</div>
+                    <div class="cha-title-wrap">
+                        <h1 class="cha-title-jp" id="rigisterModalLabel">会員登録</h1>
+                        <span class="cha-title-en">Member Registration — CHADOYA</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-0">
+                        <!-- 左欄：條款 -->
+                        <div class="col-6 cha-terms-col">
+                            <div class="cha-section-label">會員條款</div>
+                            <div class="cha-terms-text">
+                                <p>加入茶道屋會員即表示您同意我們的服務條款與隱私政策，個人資料將依法保護。</p>
+                                <p>會員享有優先訂位、積分回饋、季節限定優惠通知等權益，活動詳情以官方公告為準。</p>
+                                <p>請勿將帳號轉讓或分享他人使用。如發現異常登入，請立即聯繫客服。</p>
+                                <p>茶道屋保留修改服務條款之權利，修改後將以電子郵件通知會員。</p>
+                                <p>如有疑問，請洽客服信箱 hello@chadoya.tw。</p>
+                            </div>
+                        </div>
+
+                        <!-- 右欄：表單 -->
+                        <div class="col-6 cha-form-col">
+                            <div class="cha-section-label">填寫資料</div>
+                            <div class="cha-field">
+                                <label class="cha-label" for="regAccount">帳　號</label>
+                                <input class="cha-input" type="text" id="regAccount" placeholder="請輸入帳號">
+                            </div>
+                            <div class="cha-field">
+                                <label class="cha-label" for="regPassword">密　碼</label>
+                                <input class="cha-input" type="password" id="regPassword" placeholder="請輸入密碼">
+                            </div>
+                            <div class="cha-field">
+                                <label class="cha-label" for="regConfirm">確認密碼</label>
+                                <input class="cha-input" type="password" id="regConfirm" placeholder="請再次輸入密碼">
+                            </div>
+                            <div class="cha-field">
+                                <label class="cha-label" for="regEmail">電子信箱</label>
+                                <input class="cha-input" type="email" id="regEmail" placeholder="example@mail.com">
+                            </div>
+                            <div class="cha-check-row">
+                                <input class="cha-check" type="checkbox" id="agreeChk">
+                                <label class="cha-check-label" for="agreeChk">我已詳閱並同意上述會員條款</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cha-btn-cancel" data-bs-dismiss="modal">取　消</button>
+                    <button type="button" class="cha-btn-confirm">確認註冊</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- loginModal 原始架構-->
+    <!-- <div class="modal fade" id="loginModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-primary">
+                    <h1 class="modal-title fs-3 fw-bold" id="exampleModalLabel">會員登入</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="" class="form-label">帳號</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">密碼</label>
+                        <input type="password" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">確認註冊</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- loginModal AI 配色-->
+    <!-- loginModal -->
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <div class="cha-login-stamp">会員<br>入室</div>
+                    <div class="cha-title-wrap">
+                        <h1 class="cha-title-jp" id="loginModalLabel">会員登入</h1>
+                        <span class="cha-title-en">Member Login — CHADOYA</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="cha-field">
+                        <label class="cha-label" for="loginAccount">帳　號</label>
+                        <input class="cha-input" type="text" id="loginAccount" placeholder="請輸入帳號">
+                    </div>
+                    <div class="cha-field" style="margin-bottom: 0;">
+                        <label class="cha-label" for="loginPassword">密　碼</label>
+                        <input class="cha-input" type="password" id="loginPassword" placeholder="請輸入密碼">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cha-btn-cancel" data-bs-dismiss="modal">取　消</button>
+                    <button type="button" class="cha-btn-confirm">確認登入</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- section 3 | Hero carousel 原始架構 -->
+    <!-- <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active"
+                style="background-image: url(images/land01.avif); height: 90vh; background-position: center center; background-size: cover;">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>這是廣告台詞標題</h5>
+                    <p>這是廣告台詞內文大約100字</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>-->
+
+    <!-- section 3 | Hero carousel AI 配色 -->
+    <section id="s03">
+        <div id="carouselExampleIndicators" class="carousel slide cha-carousel" data-bs-ride="carousel">
+
+            <!-- indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+
+            <!-- slides：三個 carousel-item 平行排列 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active"
+                    style="background-image: url(https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=1400&q=80); height: 90vh; background-position: center; background-size: cover;">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url(https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=1400&q=80); height: 90vh; background-position: center; background-size: cover;">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url(https://images.unsplash.com/photo-1631308491952-040f80133535?w=1400&q=80); height: 90vh; background-position: center; background-size: cover;">
+                </div>
+            </div>
+
+            <!-- 控制按鈕：carousel-inner 的兄弟，不能在裡面 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- section 4 | counterup 數據 原始架構 -->
+    <!-- <section id="s04">
+        <div class="row">
+            <div class="col-md-5"
+                style="background-image: url(); ; background-position: center center; background-size: cover;"></div>
+            <div class="col-md-7">
+                <div class="display-3">2026 新開幕</div><span>榮獲日本抹茶椏巴蘇姬大賽冠軍</span>
+                <div class="display-3">xxx</div>
+                <p class="fs-5 fw-bold">東京賽冠軍</p>
+                <p class="fs-5 fw-bold">東京賽冠軍</p>
+                <p class="fs-5 fw-bold">東京賽冠軍</p>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <div class="h4">最高品質</div>
+                    <div class="h3">1000 <span>個</span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="h4">分店數量</div>
+                    <div class="h3">1000 <span>個</span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="h4">最高品質</div>
+                    <div class="h3">1000 <span>個</span></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="h4">最高品質</div>
+                    <div class="h3">1000 <span>個</span></div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- section 4 | 品牌數據 AI 生成 -->
+    <section id="s04">
+        <div class="row g-0">
+            <!-- 左欄：圖片 -->
+            <div class="col-md-5 s04-img-col"></div>
+            <!-- 右欄：文字 + 數字 -->
+            <div class="col-md-7 s04-text-col">
+                <div class="s04-eyebrow">Est. 2026 — Taichung, Taiwan</div>
+                <div class="s04-year">令和八年創業</div>
+                <h2 class="s04-headline">一葉知茶</h2>
+                <div class="s04-divider"></div>
+
+                <p class="s04-award">2026 東京手作飲品大賞　最優秀賞 受賞</p>
+                <p class="s04-award">日本抹茶協會認定　職人技術 A 級認証取得</p>
+                <p class="s04-award">台灣農委會契作有機茶園　嚴選第一採摘</p>
+
+                <!-- 數字列 -->
+                <div class="row s04-stats-row g-0">
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">契作茶農</div>
+                        <div class="s04-stat-number01">12<span>戶</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">手作品項</div>
+                        <div class="s04-stat-number02">48<span>品</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">每日來客</div>
+                        <div class="s04-stat-number03">300<span>名</span></div>
+                    </div>
+                    <div class="col-6 col-md-3 s04-stat">
+                        <div class="s04-stat-label">職人資歷</div>
+                        <div class="s04-stat-number04">15<span>年</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- section 5 | 時間軸排版 點餐順序 -->
+    <section id="s05" style="position: relative;
+    background-image: url('https://images.unsplash.com/photo-1525947088131-b701cd0f6dc3?w=1600&q=80');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    padding: 5rem 0;">
+        <!-- background-attachment: fixed 固定住背景圖 -->
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s05-main-title-en">Order Guide</p>
+                <h2 class="s05-main-title">如何點餐</h2>
+                <div class="s05-main-divider"></div>
+            </div>
+
+            <div class="s05-timeline-section">
+
+                <!-- 步驟 01：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 01</p>
+                        <h3 class="s05-step-title">掃描入座</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">落座後，請掃描桌面 QR Code 進入線上菜單。</p>
+                        <p class="s05-step-text">無需下載任何 App，手機瀏覽器即可完成全程點餐。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img" src="https://images.unsplash.com/photo-1625038624658-01a222d8fb8e?w=800&q=80"
+                            alt="掃描 QR Code 入座">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 02：圖左、文字右 -->
+                <div class="row align-items-center flex-row-reverse s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 02</p>
+                        <h3 class="s05-step-title">選擇品項</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">從四十八款職人手作飲品中挑選心儀茶品。</p>
+                        <p class="s05-step-text">每款均可自選甜度、溫度與茶底，量身調配您的專屬一杯。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <!-- 步驟 02 圖片 -->
+                        <img class="s05-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&q=80"
+                            alt="選擇茶品品項">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 03：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 03</p>
+                        <h3 class="s05-step-title">確認訂單</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">確認品項、數量與備註（如過敏原、少糖需求）後送出。</p>
+                        <p class="s05-step-text">系統將即時顯示訂單狀態與預估等候時間。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&q=80" alt="確認訂單">
+                    </div>
+                </div>
+
+                <hr class="s05-row-divider">
+
+                <!-- 步驟 04：圖左、文字右 -->
+                <div class="row align-items-center flex-row-reverse s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 04</p>
+                        <h3 class="s05-step-title">職人備製</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">訂單送出後由資歷十五年以上職人手工現沖製作。</p>
+                        <p class="s05-step-text">嚴選契作有機茶葉，每一杯皆在您點餐後才開始沖泡。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1531969179221-3946e6b5a5e7?w=800&q=80" alt="職人手作備製">
+                    </div>
+                </div>
+                <hr class="s05-row-divider">
+                <!-- 步驟 05：文字左、圖右 -->
+                <div class="row align-items-center s05-timeline-pointer">
+                    <div class="col-md-6 mt-3">
+                        <p class="s05-step-label">Step 05</p>
+                        <h3 class="s05-step-title">取餐享用</h3>
+                        <div class="s05-divider"></div>
+                        <p class="s05-step-text">收到完成通知後，可至取餐區自取或由服務員送至桌邊。</p>
+                        <p class="s05-step-text">歡迎細細品味，感受每一口茶的層次與溫度。</p>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <img class="s05-img"
+                            src="https://images.unsplash.com/photo-1563822249366-3efb23b8e0c9?w=800&q=80" alt="取餐享用">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 6 | 企業理念 -->
+    <section id="s06" style="background: #f5f0e8; padding: 5rem 0 4rem;">
+        <div class="container">
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s06-eyebrow">Our Philosophy</p>
+                <h2 class="s06-main-title">茶道三信條</h2>
+                <div class="s06-main-divider"></div>
+            </div>
+            <div class="row">
+                <!-- 欄 01 -->
+                <div class="col-4 text-center s06-col">
+                    <i class="fa-solid fa-leaf fa-4x s06-icon"></i>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">一葉溯源</div>
+                    <p class="s06-card-text">與十二戶台灣契作茶農直接合作，每批茶葉皆可溯源至產地。從土壤到茶杯，每一口都承載著職人對土地的敬意。</p>
+                </div>
+                <!-- 欄 02 -->
+                <div class="col-4 text-center s06-col">
+                    <i class="fa-solid fa-flask-vial fa-4x s06-icon"></i>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">手作不妥協</div>
+                    <p class="s06-card-text">拒絕濃縮液與商業基底，所有飲品皆由職人現沖現調。四十八款品項，每一款都需要至少三年的手藝積累。</p>
+                </div>
+                <!-- 欄 03 -->
+                <div class="col-4 text-center s06-col">
+                    <i class="fa-solid fa-hands-holding fa-4x s06-icon"></i>
+                    <div class="s06-icon-divider"></div>
+                    <div class="s06-card-title">以茶會人</div>
+                    <p class="s06-card-text">茶道屋相信一杯茶能連結人與人之間的溫度。無論是獨自靜坐或與友同飲，這裡永遠是你放慢步調的所在。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 7 | 服務項目 -->
+    <section id="s07" class="position-relative" style="background: #ede8dc; min-height: 520px;">
+
+        <!-- 左欄：固定背景圖 -->
+        <div class="row">
+            <div class="col-md-5 position-absolute top-0 bottom-0 s07-img-col" style="background-image: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=900&q=80');
+               background-position: center center;
+               background-size: cover;">
+            </div>
+        </div>
+
+
+        <!-- 右欄：文字 -->
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-md-7 s07-text-col">
+
+                    <p class="s07-eyebrow">Our Story</p>
+                    <h3 class="s07-headline">職人之道，始於一葉</h3>
+                    <div class="s07-divider"></div>
+
+                    <p class="s07-body">
+                        茶道屋創立於 2026
+                        年，由一位旅居京都十五年的台灣職人返鄉創業。他帶回的不只是手藝，更是對「慢飲」文化的深刻信念——每一杯茶，都值得被認真對待。我們拒絕快速出餐的商業模式，堅持從茶葉的產地選擇、到沖泡水溫的每一個環節，皆由人手完成。
+                    </p>
+
+                    <button class="cha-btn-login mb-4">了解更多故事</button>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <div class="s07-sub-title">契作直送</div>
+                            <p class="s07-sub-text">與十二戶有機茶農簽訂長期契作，第一採摘直送工作室，從源頭守護每片茶葉的品質。</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="s07-sub-title">京都工法</div>
+                            <p class="s07-sub-text">沿用宇治傳統沖泡工序，低溫慢萃保留茶湯甘甜，拒絕任何加速工藝取代職人之手。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 8 | 會員介紹 -->
+    <section id="s08" style="background: #1a1208; padding: 5rem 0;">
+        <div class="container">
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s08-eyebrow">Membership</p>
+                <h2 class="s08-main-title">會員等級</h2>
+                <div class="s08-main-divider"></div>
+            </div>
+            <div class="row g-3">
+                <!-- 一般會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-icon-wrap">
+                            <i class="fa-solid fa-mug-hot fa-2x s08-icon"></i>
+                        </div>
+                        <div>
+                            <p class="s08-member-label">General Member</p>
+                            <h3 class="s08-member-title">一般會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">完成註冊即自動升級為一般會員。享有線上點餐優先通知、生日月份飲品九折優惠，以及每次消費累積茶葉積分。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 金卡會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-icon-wrap">
+                            <i class="fa-solid fa-award fa-2x s08-icon"></i>
+                        </div>
+                        <div>
+                            <p class="s08-member-label">Gold Member</p>
+                            <h3 class="s08-member-title">金卡會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">年度消費滿 NT$3,000 自動晉升。除一般會員權益外，另享季節新品搶先試飲、指定品項八五折，以及職人手沖體驗優先預約資格。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- VIP 會員 -->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card d-flex align-items-start gap-3">
+                        <div class="s08-icon-wrap">
+                            <i class="fa-solid fa-crown fa-2x s08-icon"></i>
+                        </div>
+                        <div>
+                            <p class="s08-member-label">VIP Member</p>
+                            <h3 class="s08-member-title">VIP 會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">年度消費滿 NT$8,000 或受邀入會。享有專屬職人一對一品茶諮詢、契作茶葉小批限量購買資格，以及每季寄送手作茶禮一份。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 黑卡會員（最頂級）-->
+                <div class="col-md-6 mt-3">
+                    <div class="s08-card s08-card-elite d-flex align-items-start gap-3">
+                        <div class="s08-icon-wrap">
+                            <i class="fa-solid fa-gem fa-2x s08-icon"></i>
+                        </div>
+                        <div>
+                            <div class="s08-elite-badge">Invitation Only</div>
+                            <p class="s08-member-label">Black Card Member</p>
+                            <h3 class="s08-member-title">黒卡會員</h3>
+                            <div class="s08-divider"></div>
+                            <p class="s08-member-text">僅限受邀，無法自行申請。享有年度私人品茶會入場資格、職人訂製茶葉禮盒、以及茶道屋創始人親筆簽名典藏茶品一套。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 9 | 品牌規格 -->
+    <section id="s09" class="position-relative" style="background: #ede8dc; min-height: 520px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 s09-text">
+                    <!-- 區塊標題 -->
+                    <p class="s09-eyebrow">Brand Specifications</p>
+                    <h3 class="s09-headline">職人規格一覽</h3>
+                    <div class="s09-divider"></div>
+
+                    <!-- 規格 dl 表 -->
+                    <dl class="s09-dl">
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">茶葉來源</dt>
+                            <dd class="col-sm-8 s09-dd">台灣本島契作有機茶園，涵蓋阿里山、梨山、杉林溪三大產區，第一採摘直送工作室。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">沖泡溫度</dt>
+                            <dd class="col-sm-8 s09-dd">綠茶系 60–70°C ／烏龍系 85–90°C ／紅茶系 95°C，依品種分別設定，絕不混用。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">品項數量</dt>
+                            <dd class="col-sm-8 s09-dd">常態供應 48 款，季節限定品項每季更新，最多同時上架 6 款限定。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">甜度選擇</dt>
+                            <dd class="col-sm-8 s09-dd">無糖 / 微糖 30% / 半糖 50% / 少糖 70% / 全糖 100%，所有品項均可自由調整。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">職人資歷</dt>
+                            <dd class="col-sm-8 s09-dd">主理職人旅居京都十五年，持有日本茶業技術士認定資格，現場駐店比例 100%。</dd>
+                        </div>
+                        <div class="row">
+                            <dt class="col-sm-4 s09-dt">外帶容器</dt>
+                            <dd class="col-sm-8 s09-dd">採用 100% 可回收再生紙杯，杯蓋為植物基 PLA 材質，拒絕一次性塑膠吸管。</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 右欄圖片（absolute 靠右） -->
+            <div class="row justify-content-end">
+                <div class="col-md-5 s09-img-col"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 10 | 預約表單 -->
+    <section id="s10" style="background: #1a1208; padding: 5rem 0;">
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center">
+                <p class="s10-eyebrow">Reservation</p>
+                <h2 class="s10-main-title">座位預約</h2>
+                <div class="s10-main-divider"></div>
+            </div>
+
+            <div class="row my-5 align-items-start g-5">
+                <!-- 左欄：地圖 -->
+                <div class="col-md-6">
+                    <iframe class="s10-map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.0342014645657!2d120.6075480764066!3d24.170533278386056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693e048d342aa9%3A0x2b6f18a6783fa3b!2z5Yue5YuV6YOo5Yue5YuV5Yqb55m85bGV572y5Lit5b2w5oqV5YiG572y77yI6Ie65Lit6IG36KiT5bGA77yJ!5e0!3m2!1szh-TW!2stw!4v1782711113390!5m2!1szh-TW!2stw"
+                        width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin">
+                    </iframe>
+                </div>
+                <!-- 右欄：表單 -->
+                <div class="col-md-6">
+                    <p class="s10-form-label">填寫預約資料</p>
+                    <div class="s10-form-divider"></div>
+                    <p class="s10-form-note">請填寫以下資料，我們將於 24 小時內以電子郵件或電話確認您的預約。<br>如需特殊座位安排，請於備註欄說明。</p>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">お名前　姓名</label>
+                        <input type="text" class="cha-input" placeholder="請輸入您的姓名">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">電話番号　聯絡電話</label>
+                        <input type="tel" class="cha-input" placeholder="請輸入聯絡電話">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">メール　電子信箱</label>
+                        <input type="email" class="cha-input" placeholder="example@mail.com">
+                    </div>
+
+                    <div class="s10-field">
+                        <label class="s10-field-label">人数　來訪人數</label>
+                        <input type="number" class="cha-input" placeholder="請輸入人數" min="1" max="20">
+                    </div>
+
+                    <div class="s10-check-row">
+                        <input type="checkbox" class="cha-check" id="utensilChk">
+                        <label class="cha-check-label" for="utensilChk">需要提供餐具（筷子、湯匙）</label>
+                    </div>
+
+                    <button type="button" class="cha-btn-confirm" style="letter-spacing: 4px; padding: 10px 32px;">
+                        送出預約
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 11 | 人才招募 -->
+    <section id="s11" style="
+    position: relative;
+    background-image: url('https://images.pexels.com/photos/29647355/pexels-photo-29647355.jpeg?w=1600&q=80');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    padding: 6rem 0;">
+
+        <div class="container">
+
+            <!-- 區塊主標 -->
+            <div class="text-center mb-5">
+                <p class="s11-sub-en" style="margin-bottom:6px;">Join Our Team</p>
+                <h2 class="s11-headline" style="font-size:28px; letter-spacing:5px;">職人招募</h2>
+                <div style="width:40px; height:1px; background:#c9a84c; margin:16px auto 0;"></div>
+            </div>
+
+            <div class="row  g-4">
+                <div class="col-md-6 ">
+
+                    <div class="s11-badge">Now Hiring — 人才招募</div>
+                    <h2 class="s11-headline">內場製茶職人</h2>
+                    <p class="s11-sub-en">Tea Craftsperson — Full Time</p>
+                    <div class="s11-divider"></div>
+
+                    <!-- 工作內容 -->
+                    <p class="s11-item-title">工作內容</p>
+                    <p class="s11-item-text">
+                        · 依職人標準手工沖泡各式茶飲，包含抹茶系、烏龍系、紅茶系品項<br>
+                        · 維護工作台清潔與備料補充，確保出餐品質穩定一致<br>
+                        · 協助季節新品試作與配方調整<br>
+                        · 配合門市排班，參與每月一次職人技術交流會議
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 待遇條件 -->
+                    <p class="s11-item-title">薪資待遇</p>
+                    <p class="s11-item-text">
+                        · 月薪 NT$32,000 起，依經驗調整（最高 NT$45,000）<br>
+                        · 到職三個月後享有勞健保、特休假<br>
+                        · 每季調薪評估制度，表現優異者可晉升副主理職人<br>
+                        · 提供職人技術培訓課程，費用由公司全額補助
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 希望條件 -->
+                    <p class="s11-item-title">希望條件</p>
+                    <p class="s11-item-text">
+                        · 對茶文化或手作飲品有熱忱，不需相關經驗（可培訓）<br>
+                        · 具備細心、耐心，能在步調穩定的環境中長期工作<br>
+                        · 有餐飲業或手作相關經驗者尤佳<br>
+                        · 可配合平日班與假日輪班
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <button type="button" class="cha-btn-confirm" style="letter-spacing: 4px; padding: 10px 36px;">
+                        加入我們
+                    </button>
+
+                </div>
+                <div class="col-md-6">
+
+                    <div class="s11-badge">Now Hiring — 人才招募</div>
+                    <h2 class="s11-headline">外場接待人員</h2>
+                    <p class="s11-sub-en">Front of House Staff — Full Time / Part Time</p>
+                    <div class="s11-divider"></div>
+
+                    <!-- 工作內容 -->
+                    <p class="s11-item-title">工作內容</p>
+                    <p class="s11-item-text">
+                        · 迎接來客入座，說明菜單品項與當季限定推薦<br>
+                        · 引導顧客完成線上點餐流程，協助不熟悉操作的來客<br>
+                        · 負責桌面整理、餐具補充與用餐區環境維護<br>
+                        · 協助外帶訂單取餐確認，維持出餐秩序流暢
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 待遇條件 -->
+                    <p class="s11-item-title">薪資待遇</p>
+                    <p class="s11-item-text">
+                        · 全職月薪 NT$28,000 起，依經驗調整<br>
+                        · 兼職時薪 NT$185 起，排班彈性可討論<br>
+                        · 到職三個月後享有勞健保、特休假（全職）<br>
+                        · 員工消費享八折優惠，每月提供職人手作飲品體驗乙次
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <!-- 希望條件 -->
+                    <p class="s11-item-title">希望條件</p>
+                    <p class="s11-item-text">
+                        · 親切有禮，善於與人溝通，喜歡與客人互動<br>
+                        · 對日式美學或茶文化有興趣者尤佳，不需相關經驗<br>
+                        · 具備基本中文溝通能力，會日文或英文者加分<br>
+                        · 可配合週末及例假日排班（至少每週一個假日）
+                    </p>
+
+                    <hr class="s11-item-divider">
+
+                    <button type="button" class="cha-btn-confirm" style="letter-spacing: 4px; padding: 10px 36px;">
+                        加入我們
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section 12 | Footer -->
+    <section id="s12">
+        <footer class="py-5">
+            <div class="container">
+
+                <div class="row align-items-center mb-3">
+                    <!-- 品牌名稱 -->
+                    <div class="col-md-4">
+                        <div class="s12-brand">
+                            <i class="fa-solid fa-mug-hot me-2" style="color:#c9a84c; font-size:14px;"></i>
+                            茶道屋 CHADOYA
+                        </div>
+                        <div class="s12-brand-en mt-1">Handcrafted Tea — Est. 2026, Taichung</div>
+                    </div>
+
+                    <!-- 頁內導覽 -->
+                    <div class="col-md-4 text-center d-none d-md-block">
+                        <div class="d-flex justify-content-center gap-4 flex-wrap">
+                            <a href="#s03" class="s12-nav-link">首頁</a>
+                            <a href="#s07" class="s12-nav-link">品牌故事</a>
+                            <a href="#s05" class="s12-nav-link">如何點餐</a>
+                            <a href="#s08" class="s12-nav-link">會員等級</a>
+                            <a href="#s10" class="s12-nav-link">座位預約</a>
+                            <a href="#s11" class="s12-nav-link">人才招募</a>
+                        </div>
+                    </div>
+
+                    <!-- 社群連結 -->
+                    <div class="col-md-4 text-md-end text-start mt-3 mt-md-0">
+                        <div class="s12-social d-flex gap-3 justify-content-md-end">
+                            <a href="#"><i class="fa-brands fa-line fa-lg" style="color:#2d885e;"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram fa-lg" style="color:#8a7a5a;"></i></a>
+                            <a href="#"><i class="fa-brands fa-square-facebook fa-lg" style="color:#8a7a5a;"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="s12-divider">
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                    <p class="s12-copyright mb-0">
+                        © 2026 茶道屋 CHADOYA. All rights reserved.
+                    </p>
+                    <p class="s12-copyright mb-0">
+                        hello@chadoya.tw ／ Tel. 04-2000-0000
+                    </p>
+                </div>
+
+            </div>
+        </footer>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js">	</script>
+    <script>
+
+        // 數字跳動效果
+        const counterUp = window.counterUp.default
+
+        const callback = entries => {
+            entries.forEach(entry => {
+                const el = entry.target
+                if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+                    counterUp(el, {
+                        duration: 500,
+                        delay: 16,
+                    })
+                    el.classList.add('is-visible')
+                }
+            })
+        }
+
+        const IO = new IntersectionObserver(callback, { threshold: 1 })
+
+        const els = document.querySelectorAll('.s04-stat-number01, .s04-stat-number02, .s04-stat-number03, .s04-stat-number04')
+        els.forEach(el => IO.observe(el))
+
+    </script>
+</body>
+
+</html>

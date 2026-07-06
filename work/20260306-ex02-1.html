@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Gym 健身房形象網站</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+
+        :root {
+
+
+            --main-100: #f5f7fa;
+            --main-200: #e8edf3;
+            --main-300: #d7dee8;
+            --main-500: #5b6b7a;
+            --main-700: #2f3e4d;
+            --main-900: #16202a;
+
+            --accent-300: #ff9f43;
+            --accent-500: #ff7f11;
+            --accent-700: #d96500;
+
+            --dark-100: #3c4652;
+            --dark-300: #26313d;
+            --dark-500: #1c242e;
+            --dark-700: #131920;
+            --dark-900: #0b0f14;
+
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            background-color: var(--main-200);
+            font-family: "Noto Sans TC", sans-serif;
+        }
+
+        .wrapper {
+            width: 1024px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 4px 4px 10px 4px var(--shadow);
+            background-color: var(--white);
+        }
+
+        .logo {
+            background-image: url(images/gym.jpg);
+            height: 240px;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .header nav {
+            background-color: var(--dark-500);
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .header nav ul {
+            display: inline-block;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .header nav ul li {
+            float: left;
+            list-style-type: none;
+        }
+
+
+
+        .header nav ul li a {
+            display: block;
+            font-size: 18px;
+            text-decoration: none;
+            color: var(--main-300);
+            background-color: var(--dark-300);
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px 1px var(--dark-900);
+            padding: 15px 20px;
+            margin: 1px 10px;
+            transition: 0.5s;
+
+        }
+
+        .header nav ul li a:hover {
+            transform: scale(1.03);
+            background-color: var(--accent-500);
+        }
+
+        .hero {
+            background-color: var(--main-100);
+            text-align: center;
+            padding: 40px 40px;
+
+        }
+
+        .hero h1,
+        .about .section-title,
+        .courses .section-title,
+        .notice .section-title,
+        .contact .section-title {
+            font-size: 52px;
+            line-height: 5rem;
+            text-align: center;
+        }
+
+        .hero p,
+        .about p {
+            font-size: 18px;
+            line-height: 3rem;
+            letter-spacing: 1.5px;
+            color: var(--main-500);
+            padding: 40px 70px;
+        }
+
+        .hero a {
+            font-size: 18px;
+            display: block;
+            background-color: var(--accent-300);
+            color: var(--main-100);
+            text-decoration: none;
+            width: 100px;
+            height: 50px;
+            padding: 15px 5px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px auto;
+            box-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .about {
+            background-color: #fff;
+            text-align: center;
+            padding: 40px 40px;
+        }
+
+        .courses {
+            background-color: var(--main-100);
+            padding: 20px;
+        }
+
+        .course-item {
+            background-color: var(--white);
+            padding: 40px 10px;
+            margin: 20px 70px;
+            border-radius: 12px;
+            box-shadow: 2px 2px 4px 2px var(--shadow);
+        }
+
+
+        .course-item h3 {
+            font-size: 28px;
+            color: var(--accent-700);
+        }
+
+        .course-item p {
+            font-size: 18px;
+            letter-spacing: 1.5px;
+            color: var(--main-500);
+            margin-top: 20px;
+        }
+
+        .notice {
+            padding: 40px 70px;
+            background-color: var(--white);
+        }
+
+        .notice ul {
+            margin: 20px 70px;
+        }
+
+        .notice ul li {
+            font-size: 23px;
+            color: var(--main-500);
+            line-height: 3rem;
+        }
+
+        .contact {
+            background-color: var(--main-300);
+            padding: 20px;
+
+        }
+
+        .contact p {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 28px;
+            line-height: 3rem;
+        }
+
+        .contact a {
+            font-size: 18px;
+            display: block;
+            background-color: var(--dark-500);
+            color: var(--main-100);
+            text-decoration: none;
+            width: 100px;
+            height: 50px;
+            padding: 15px 5px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px auto;
+            box-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        .footer {
+            margin-top: 10px;
+            background-color: var(--dark-900);
+            color: var(--main-100);
+            text-align: center;
+            font-size: 28px;
+            padding: 10px;
+        }
+
+        @media screen and (max-width:768px) {
+            .wrapper {
+                width: 100%;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            .logo {
+                background-image: url(images/gym.jpg);
+                height: 140px;
+            }
+
+            .header nav {
+                background-color: var(--dark-500);
+            }
+
+            .header nav ul {
+                display: block;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .header nav ul li {
+                float: none;
+                list-style-type: none;
+
+            }
+
+            .header nav ul li a {
+                display: block;
+                font-weight: bolder;
+                font-size: 15px;
+                text-decoration: none;
+                color: var(--main-300);
+                background-color: var(--dark-300);
+                border-radius: 0%;
+                margin: 5px 10px;
+                transition: 0.3s;
+            }
+
+            .header nav ul li a:hover {
+                transform: none;
+                background-color: var(--accent-500);
+            }
+
+            .hero,
+            .about,
+            .notice,
+            .contact {
+                background-color: var(--main-100);
+                padding: 20px 20px;
+                text-align: center;
+
+            }
+
+            .hero h1,
+            .about .section-title,
+            .courses .section-title,
+            .notice .section-title,
+            .contact .section-title {
+                font-size: 36px;
+                line-height: 2rem;
+                text-align: center;
+            }
+
+            .hero p,
+            .about p {
+                line-height: 2rem;
+                letter-spacing: 1px;
+                color: var(--main-500);
+                padding: 20px 20px;
+                margin: 10px 10px;
+            }
+
+            .hero a {
+                margin: 10px auto;
+            }
+
+            .about {
+                background-color: #fff;
+                text-align: center;
+            }
+
+
+            .course-item {
+                padding: 15px 40px;
+                margin: 20px 20px;
+                border-radius: 12px;
+            }
+
+
+            .course-item h3 {
+                font-size: 22px;
+            }
+
+            .course-item p {
+                font-size: 18px;
+                letter-spacing: 1.5px;
+                color: var(--main-500);
+                margin-top: 20px;
+            }
+
+            .notice {
+                padding: 40px 40px;
+                background-color: var(--white);
+            }
+
+            .notice ul {
+                margin: 20px 20px;
+            }
+
+            .notice ul li {
+                font-size: 20px;
+                color: var(--main-500);
+                line-height: 2rem;
+            }
+
+            .contact {
+                background-color: var(--main-300);
+                padding: 20px;
+
+            }
+
+            .contact p {
+                margin-top: 20px;
+                text-align: center;
+                font-size: 20px;
+                line-height: 2rem;
+            }
+
+            .contact a {
+                font-size: 18px;
+            }
+
+            .footer {
+                font-size: 14px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="logo"></div>
+            <nav>
+                <ul>
+                    <li><a href="#">首頁</a></li>
+                    <li><a href="#">關於我們</a></li>
+                    <li><a href="#">課程介紹</a></li>
+                    <li><a href="#">最新消息</a></li>
+                    <li><a href="#">聯絡我們</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="hero">
+            <h1>打造更強壯的自己</h1>
+            <p>Power Gym 提供專業教練、完整器材與舒適訓練空間，陪你從基礎開始穩穩進步。</p>
+            <p>不論你想增肌、減脂、改善體能，還是單純想讓生活更有精神，現在就是開始的最好時機。</p>
+            <a href="#">立即體驗</a>
+        </div>
+
+        <div class="about">
+            <h2 class="section-title">關於我們</h2>
+            <p>我們相信，運動不只是改變外表，更是改變狀態。從走進健身房的第一天開始，每一次訓練都在累積更穩定的自己。</p>
+            <p>場館內提供明亮空間、基礎與進階訓練器材，以及友善的教學環境，讓初學者不害怕，讓進階學員也能持續挑戰。</p>
+        </div>
+
+        <div class="courses">
+            <h2 class="section-title">課程介紹</h2>
+
+            <div class="course-item">
+                <h3>重量訓練</h3>
+                <p>透過基礎器材與自由重量訓練，提升肌力與身體控制能力，適合想建立穩定運動習慣的學員。</p>
+            </div>
+
+            <div class="course-item">
+                <h3>有氧燃脂</h3>
+                <p>結合跑步機、飛輪與循環式訓練內容，幫助提升心肺耐力，讓減脂過程更有效率。</p>
+            </div>
+
+            <div class="course-item">
+                <h3>一對一教練課</h3>
+                <p>由專業教練依照個人需求安排訓練方向，無論是新手入門還是目標突破，都能獲得更明確的指導。</p>
+            </div>
+        </div>
+
+        <div class="notice">
+            <h2 class="section-title">最新消息</h2>
+            <ul>
+                <li>三月新會員體驗價只要 499 元。</li>
+                <li>團體課程限時優惠，兩人同行享九折。</li>
+                <li>新會員入會即贈一次身體組成分析。</li>
+                <li>清明連假營業時間調整請留意官方公告。</li>
+            </ul>
+        </div>
+
+        <div class="contact">
+            <h2 class="section-title">聯絡我們</h2>
+            <p>地址：台中市健康路 88 號</p>
+            <p>電話：04-1234-5678</p>
+            <p>營業時間：週一至週日 08:00 - 22:00</p>
+            <a href="#">加入會員</a>
+        </div>
+
+        <div class="footer">
+            <p>Power Gym © 2026 All Rights Reserved.｜跨平台班 練習作品</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mycss.css">
+    <title>網頁名稱</title>
+</head>
+<body>
+    <h1></h1>
+    <p></p>    
+
+
+    <script src="../javascript/bootstrap.bundle.min.js"></script>
+</body>
+</html>

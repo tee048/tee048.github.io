@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Charlie Tee｜作品集履歷展示圖</title>
+<style>
+:root{
+  --ink:#5a4129;
+  --ink-soft:#8a7060;
+  --line:#cda37f;
+  --paper:#f7f1e5;
+  --paper-2:#efe6d4;
+  --paper-shadow:rgba(90,65,41,.18);
+  --matcha:#7d8c5c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#e9e0cf;font-family:'IBM Plex Mono','Noto Serif CJK TC',serif;color:var(--ink);}
+
+/* ========== 畫布 ========== */
+.sheet{
+  position:relative;width:1600px;height:1000px;overflow:hidden;
+  background:
+    radial-gradient(1200px 700px at 78% 18%, rgba(205,163,127,.14), transparent 60%),
+    radial-gradient(900px 600px at 8% 92%, rgba(205,163,127,.12), transparent 60%),
+    var(--paper);
+}
+/* 紙張纖維紋理 */
+.sheet::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0 0.33 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ========== 導覽列（沿用 site-nav） ========== */
+.site-nav{
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 48px;border-bottom:1px solid rgba(205,163,127,.45);
+  background:rgba(247,241,229,.75);
+}
+.site-nav .brand{font-weight:700;letter-spacing:.12em;font-size:17px;}
+.site-nav .nav-links span{
+  color:var(--ink-soft);font-size:13px;letter-spacing:.14em;margin-left:34px;
+  padding-bottom:3px;border-bottom:1px solid transparent;
+}
+.site-nav .nav-links span.on{color:var(--ink);border-bottom-color:var(--line);}
+
+/* ========== 版面 ========== */
+.grid{position:absolute;top:64px;bottom:0;left:0;right:0;display:flex;}
+.col-left{width:492px;padding:36px 40px 30px 48px;display:flex;flex-direction:column;}
+.col-right{flex:1;padding:36px 48px 30px 24px;position:relative;}
+
+/* 區塊小標（沿用 section-label） */
+.section-label{
+  display:flex;align-items:center;gap:12px;
+  color:var(--ink-soft);font-size:12.5px;letter-spacing:.28em;margin-bottom:16px;
+}
+.section-label::after{content:"";flex:1;height:1px;background:var(--line);opacity:.55;}
+
+/* work-tag 圓標（沿用） */
+.work-tag{
+  display:inline-block;font-size:11.5px;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:20px;padding:3px 12px;margin:3px 4px 3px 0;
+  letter-spacing:.06em;background:rgba(250,246,238,.6);
+}
+.work-tag.acc{color:var(--matcha);border-color:var(--matcha);}
+
+/* ========== 左欄：ABOUT ========== */
+.name{font-family:'Noto Serif CJK TC',serif;font-size:44px;font-weight:700;letter-spacing:.04em;line-height:1.1;}
+.name small{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;color:var(--ink-soft);letter-spacing:.2em;margin-top:10px;}
+.slogan{
+  margin:18px 0 20px;font-size:16.5px;font-weight:700;letter-spacing:.06em;
+  border-left:3px solid var(--line);padding-left:14px;line-height:1.7;
+}
+.bio{font-size:13.5px;line-height:2.05;color:#6d5949;text-align:justify;}
+.bio b{color:var(--ink);}
+
+.exp{margin-top:14px;font-size:12.5px;line-height:1.9;color:var(--ink-soft);}
+.exp .yr{color:var(--ink);font-weight:700;margin-right:10px;}
+
+.trend-list{margin-top:4px;}
+.contact{
+  margin-top:auto;padding-top:16px;border-top:1px dashed var(--line);
+  font-size:12.5px;color:var(--ink-soft);line-height:1.9;letter-spacing:.04em;
+}
+.contact b{color:var(--ink);}
+
+/* ========== 右欄：FEATURED 茶道屋 ========== */
+.featured{display:flex;gap:26px;align-items:flex-start;}
+
+/* 瀏覽器紙卡（作品呈現方式：以裝置框呈現網站） */
+.browser{
+  width:640px;background:#fdfaf3;border:1px solid rgba(205,163,127,.6);
+  box-shadow:0 18px 40px var(--paper-shadow), 0 2px 0 rgba(255,255,255,.6) inset;
+  transform:rotate(-1.6deg);position:relative;
+}
+.browser .bar{
+  display:flex;align-items:center;gap:8px;height:34px;padding:0 14px;
+  border-bottom:1px solid rgba(205,163,127,.5);background:var(--paper-2);
+}
+.browser .bar i{width:10px;height:10px;border-radius:50%;border:1px solid var(--ink-soft);opacity:.65;}
+.browser .bar .url{
+  flex:1;margin-left:8px;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;
+  background:#f7f1e5;border:1px solid rgba(205,163,127,.45);border-radius:14px;padding:3px 12px;
+}
+/* 紙膠帶 */
+.tape{
+  position:absolute;width:96px;height:26px;background:rgba(205,163,127,.4);
+  backdrop-filter:none;border-left:1px dashed rgba(90,65,41,.25);border-right:1px dashed rgba(90,65,41,.25);
+}
+.tape.tl{top:-13px;left:44px;transform:rotate(-8deg);}
+.tape.br{bottom:-13px;right:52px;transform:rotate(6deg);}
+
+/* --- 茶道屋站內畫面 --- */
+.tea{position:relative;height:436px;padding:26px 30px;overflow:hidden;
+  background:
+    radial-gradient(420px 300px at 82% 30%, rgba(125,140,92,.10), transparent 65%),
+    #fdfaf3;
+}
+.tea-nav{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.22em;color:var(--ink-soft);margin-bottom:8px;}
+.tea-nav b{color:var(--ink);letter-spacing:.3em;}
+.tea-hero{display:flex;align-items:center;gap:20px;}
+.v-title{
+  writing-mode:vertical-rl;font-family:'Noto Serif CJK TC',serif;
+  font-size:58px;font-weight:700;letter-spacing:.28em;line-height:1;color:var(--ink);
+  border-right:1px solid var(--line);padding-right:16px;height:242px;
+}
+.tea-copy{flex:1;}
+.tea-copy .en{font-size:11px;letter-spacing:.34em;color:var(--matcha);margin-bottom:10px;}
+.tea-copy h2{font-family:'Noto Serif CJK TC',serif;font-size:23px;letter-spacing:.1em;margin-bottom:10px;}
+.tea-copy p{font-size:12px;line-height:2;color:#6d5949;max-width:250px;text-align:justify;}
+.tea-cta{
+  display:inline-block;margin-top:12px;font-size:11.5px;letter-spacing:.2em;color:var(--ink);
+  border:1px solid var(--ink);border-radius:20px;padding:6px 20px;
+}
+.cup{flex-shrink:0;}
+.tea-menu{display:flex;gap:14px;margin-top:20px;}
+.tea-item{
+  flex:1;border:1px solid rgba(205,163,127,.6);background:rgba(247,241,229,.7);
+  padding:12px 14px;font-size:12px;letter-spacing:.08em;
+}
+.tea-item .nm{font-family:'Noto Serif CJK TC',serif;font-weight:700;font-size:14px;}
+.tea-item .pr{float:right;color:var(--ink-soft);font-size:11px;}
+.tea-item .ds{margin-top:6px;color:var(--ink-soft);font-size:10.5px;letter-spacing:.05em;}
+.tea-item .sw{display:inline-block;width:26px;height:5px;border-radius:3px;margin-top:8px;}
+
+/* featured 說明側欄 */
+.feat-side{flex:1;padding-top:6px;}
+.feat-side h3{font-family:'Noto Serif CJK TC',serif;font-size:21px;letter-spacing:.08em;margin-bottom:6px;}
+.feat-side .role{font-size:11.5px;color:var(--ink-soft);letter-spacing:.14em;margin-bottom:12px;}
+.feat-side ul{list-style:none;font-size:12.5px;line-height:1.9;color:#6d5949;margin:12px 0 4px;}
+.feat-side li::before{content:"── ";color:var(--line);}
+
+/* ========== 右欄下方：WORKS 卡片列（沿用 photo_box 拼貼） ========== */
+.works-row{display:flex;gap:30px;margin-top:26px;align-items:flex-start;}
+.wcard{width:250px;text-align:center;}
+.pbox{
+  aspect-ratio:7/9;width:100%;background:#fdfaf3;position:relative;
+  border:1px solid rgba(205,163,127,.55);box-shadow:0 12px 26px var(--paper-shadow);
+  padding:14px;overflow:hidden;
+}
+.r1{transform:rotate(3deg);} .r2{transform:rotate(-2.4deg);} .r3{transform:rotate(4deg);}
+.work-caption{margin-top:16px;}
+.work-title{font-size:13.5px;font-weight:700;letter-spacing:.06em;margin-bottom:5px;font-family:'Noto Serif CJK TC',serif;}
+
+/* 卡內迷你畫面（示意各作品版型） */
+.mini{font-size:9px;color:var(--ink-soft);letter-spacing:.1em;}
+.mini .bar2{height:14px;border-bottom:1px solid rgba(205,163,127,.5);display:flex;align-items:center;gap:4px;margin-bottom:10px;}
+.mini .bar2 i{width:5px;height:5px;border-radius:50%;border:1px solid var(--ink-soft);}
+.blk{background:var(--paper-2);border:1px solid rgba(205,163,127,.4);}
+.mini .hero{height:64px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif CJK TC',serif;font-size:13px;color:var(--ink);letter-spacing:.2em;}
+.mini .rowx{display:flex;gap:6px;margin-top:6px;}
+.mini .rowx .blk{flex:1;height:44px;}
+.mini .linez{height:6px;margin-top:6px;background:linear-gradient(90deg,rgba(138,112,96,.35) 70%,transparent 70%);}
+.mini .linez.s{background:linear-gradient(90deg,rgba(138,112,96,.3) 45%,transparent 45%);}
+.stamp{
+  position:absolute;right:8px;bottom:8px;font-size:8.5px;letter-spacing:.14em;color:var(--ink);
+  border:1px solid var(--line);border-radius:12px;padding:2px 8px;background:rgba(250,246,238,.92);
+}
+/* 落款印章與頁尾 */
+.seal{
+  position:absolute;right:52px;bottom:34px;width:64px;height:64px;border-radius:8px;
+  background:#b1543f;color:#f7f1e5;display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif CJK TC',serif;font-size:34px;font-weight:700;
+  transform:rotate(-4deg);box-shadow:0 6px 14px var(--paper-shadow);opacity:.9;
+}
+.foot-note{
+  position:absolute;right:132px;bottom:52px;font-size:10.5px;letter-spacing:.24em;color:var(--ink-soft);
+}
+/* 手機框（Figma 卡） */
+.phone{width:86px;height:158px;margin:6px auto 0;border:1.5px solid var(--ink-soft);border-radius:14px;padding:8px 7px;background:#f7f1e5;}
+.phone .notch{width:26px;height:4px;border-radius:3px;background:var(--ink-soft);opacity:.5;margin:0 auto 8px;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- 導覽列 -->
+  <nav class="site-nav">
+    <span class="brand">CHARLIE TEE</span>
+    <div class="nav-links">
+      <span class="on">WORKS</span><span>GRAPHIC</span><span>ABOUT</span>
+    </div>
+  </nav>
+
+  <div class="grid">
+
+    <!-- ===== 左欄：個人簡介 ===== -->
+    <div class="col-left">
+      <div class="section-label">ABOUT／關於我</div>
+      <div class="name">Charlie Tee
+        <small>FRONT-END DEVELOPER</small>
+      </div>
+      <p class="slogan">服務背景 × 前端開發<br>從使用者需求出發，打造好用的網頁系統</p>
+      <p class="bio">
+        社工系出身、歷經<b>就業服務與零售店長</b>的第一線服務經驗，習慣先傾聽需求、再動手解決。
+        轉入前端開發後，把同一套「以人為本」的方法帶進介面：<b>從使用情境推導版面與互動</b>，
+        兼顧視覺風格與實際好用。
+      </p>
+      <div class="exp">
+        <div><span class="yr">2022–2025</span>plain-me｜正職／店長</div>
+        <div><span class="yr">2020–2022</span>屏東縣政府｜支持性就服員</div>
+        <div><span class="yr">2020</span>靜宜大學 社會工作學系</div>
+      </div>
+
+      <div class="section-label" style="margin-top:26px;">SKILLS／技能</div>
+      <div>
+        <span class="work-tag">HTML5</span><span class="work-tag">CSS3</span><span class="work-tag">JavaScript</span><span class="work-tag">Vue 3</span><span class="work-tag">Bootstrap 5</span><span class="work-tag">Figma</span><span class="work-tag">Photoshop</span><span class="work-tag">Git / GitHub</span>
+      </div>
+
+      <div class="section-label" style="margin-top:24px;">TREND／業界趨勢實踐</div>
+      <div class="trend-list">
+        <span class="work-tag acc">RWD 響應式設計</span><span class="work-tag acc">Web 無障礙 a11y</span><span class="work-tag acc">元件化開發</span><span class="work-tag acc">Design Token</span><span class="work-tag acc">效能與減少動態</span><span class="work-tag acc">AI 協作開發</span>
+      </div>
+
+      <div class="contact">
+        <div><b>GitHub</b>　github.com/tee048</div>
+        <div><b>Email</b>　teeyuwu48@gmail.com</div>
+        <div><b>Based in</b>　Taiwan</div>
+      </div>
+    </div>
+
+    <!-- ===== 右欄 ===== -->
+    <div class="col-right">
+      <div class="section-label">FEATURED／茶道屋・一頁式網站</div>
+
+      <div class="featured">
+        <!-- 瀏覽器紙卡：茶道屋 -->
+        <div class="browser">
+          <span class="tape tl"></span><span class="tape br"></span>
+          <div class="bar"><i></i><i></i><i></i><span class="url">chadow.tw ─ 茶道屋｜一杯茶的時間</span></div>
+          <div class="tea">
+            <div class="tea-nav"><b>茶道屋</b><span>茶品　座席　器物　預約</span></div>
+            <div class="tea-hero">
+              <div class="v-title">一期一會</div>
+              <div class="tea-copy">
+                <div class="en">CHA-DO-YA — TEA HOUSE</div>
+                <h2>一杯茶的時間</h2>
+                <p>以季節選茶、手沖慢泡。從入座到回甘，替每位客人留下安靜而完整的十五分鐘。</p>
+                <span class="tea-cta">預約座席 →</span>
+              </div>
+              <!-- 茶碗俯視 SVG -->
+              <svg class="cup" width="150" height="150" viewBox="0 0 150 150">
+                <circle cx="75" cy="78" r="58" fill="none" stroke="#cda37f" stroke-width="2"/>
+                <circle cx="75" cy="78" r="46" fill="#efe6d4" stroke="#8a7060" stroke-width="1.4"/>
+                <circle cx="75" cy="78" r="36" fill="#7d8c5c" opacity=".82"/>
+                <path d="M52 78c8-10 38-10 46 0-8 8-38 8-46 0z" fill="#f7f1e5" opacity=".28"/>
+                <path d="M70 30c-4-8 4-10 2-16M84 32c-4-8 4-10 2-16" fill="none" stroke="#8a7060" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
+              </svg>
+            </div>
+            <div class="tea-menu">
+              <div class="tea-item"><span class="nm">煎茶</span><span class="pr">NT$120</span><div class="ds">清香回甘・靜岡</div><span class="sw" style="background:#a8b57f;"></span></div>
+              <div class="tea-item"><span class="nm">抹茶</span><span class="pr">NT$150</span><div class="ds">濃醇厚韻・宇治</div><span class="sw" style="background:#7d8c5c;"></span></div>
+              <div class="tea-item"><span class="nm">焙茶</span><span class="pr">NT$130</span><div class="ds">炭焙暖香・低咖啡因</div><span class="sw" style="background:#a97e50;"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- featured 說明 -->
+        <div class="feat-side">
+          <h3>茶道屋｜品牌一頁式網站</h3>
+          <div class="role">DESIGN + FRONT-END／獨立完成</div>
+          <span class="work-tag">HTML</span><span class="work-tag">CSS</span><span class="work-tag">RWD</span>
+          <ul>
+            <li>直式標題與留白，呼應茶席的節奏</li>
+            <li>全站色彩以 Design Token 統一管理</li>
+            <li>捲動進場動畫，並支援 reduced-motion</li>
+            <li>行動裝置優先，單欄動線清楚</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:24px;">WORKS／更多網頁作品</div>
+      <div class="works-row">
+
+        <!-- 親子館報到系統 -->
+        <div class="wcard">
+          <div class="pbox r1">
+            <div class="mini">
+              <div class="bar2"><i></i><i></i><i></i></div>
+              <div class="blk hero">親子館報到系統</div>
+              <div class="rowx"><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
+              <div class="linez"></div><div class="linez s"></div>
+              <div class="rowx"><div class="blk" style="height:30px;"></div><div class="blk" style="height:30px;"></div></div>
+            </div>
+            <span class="stamp">Vue 3</span>
+          </div>
+          <div class="work-caption">
+            <p class="work-title">親子館報到系統</p>
+            <span class="work-tag">Vue</span><span class="work-tag">控制面板</span>
+          </div>
+        </div>
+
+        <!-- 健身房一頁式 -->
+        <div class="wcard">
+          <div class="pbox r2">
+            <div class="mini">
+              <div class="bar2"><i></i><i></i><i></i></div>
+              <div class="blk hero" style="letter-spacing:.12em;">一頁式・健身房</div>
+              <div class="linez"></div><div class="linez s"></div>
+              <div class="rowx"><div class="blk" style="height:52px;"></div><div class="blk" style="height:52px;"></div><div class="blk" style="height:52px;"></div></div>
+              <div class="linez"></div>
+            </div>
+            <span class="stamp">RWD</span>
+          </div>
+          <div class="work-caption">
+            <p class="work-title">一頁式網站－健身房</p>
+            <span class="work-tag">HTML</span><span class="work-tag">CSS</span>
+          </div>
+        </div>
+
+        <!-- Figma 香氛品牌 -->
+        <div class="wcard">
+          <div class="pbox r3">
+            <div class="mini">
+              <div class="bar2"><i></i><i></i><i></i></div>
+              <div class="phone">
+                <div class="notch"></div>
+                <div class="blk" style="height:44px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif CJK TC',serif;font-size:10px;color:#5a4129;">香氛品牌</div>
+                <div class="linez"></div><div class="linez s"></div>
+                <div class="rowx"><div class="blk" style="height:26px;"></div><div class="blk" style="height:26px;"></div></div>
+              </div>
+            </div>
+            <span class="stamp">Prototype</span>
+          </div>
+          <div class="work-caption">
+            <p class="work-title">FIGMA 手機版面－香氛品牌</p>
+            <span class="work-tag">figma</span><span class="work-tag">UI/UX</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="foot-note">PORTFOLIO ─ 2026</div>
+      <div class="seal">茶</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
