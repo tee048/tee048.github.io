@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排版練習</title>
+    <link rel="stylesheet" href="mycss.css">
+    <style>
+        /* 預設間距歸零 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .wrapper {
+            width: 1024px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--color-neutral-50);
+
+        }
+
+        .logo {
+            background-image: url(images/thaihand02.jpg);
+            height: 400px;
+            margin-bottom: 5px;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .header nav {
+            background-color: var(--color-primary-100);
+            /* 容器內文字水平置中 */
+            text-align: center;
+            height: 80px;
+        }
+
+        .header nav ul {
+            display: inline-block;
+        }
+
+        .header nav ul li {
+            float: left;
+            /* 外觀重置: 重置 <ul> 與 <li> 預設每項目最前面加上得「黑色實心圓點（Bullet）」*/
+            list-style-type: none;
+            width: 190px;
+        }
+
+        .header nav ul li a {
+            display: block;
+            /* padding: y x;  */
+            padding: 20px 20px;
+            background-color: var(--color-secondary-500);
+            text-decoration: none;
+            color: var(--color-neutral-800);
+            font-size: 14px;
+            font-weight: bolder;
+            margin: 10px 10px;
+            box-shadow: 2px 3px 3px var(--color-secondary-900);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .header nav ul li a:hover {
+            transform: scale(1.05);
+            background-color: var(--color-secondary-700);
+
+        }
+
+        .content {
+            padding: 100px 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            font-weight: bolder;
+            color: var(--color-neutral-800);
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+        }
+
+        .content p {
+            font-size: 18px;
+            color: var(--color-neutral-700);
+            letter-spacing: 2px;
+            line-height: 1.8rem;
+            text-align: center;
+
+        }
+
+        .content a {
+            display: block;
+            color: var(--color-secondary-100);
+            font-weight: bolder;
+            width: 100px;
+            height: 30px;
+            padding: 3px 0;
+            background-color: var(--color-neutral-500);
+            margin: 50px auto;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+
+
+        }
+
+        .footer {
+            background-color: var(--color-secondary-500);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            color: var(--color-neutral-100);
+            font-size: 14px;
+            font-weight: bolder;
+            margin-top: 5px;
+            margin-bottom: 0px;
+
+        }
+
+        /* 針對手持裝置 */
+        @media screen and (max-width:768px) {
+            .wrapper {
+                width: 100%;
+            }
+
+            .logo {
+                height: 200px;
+            }
+
+            .header nav {
+                background-color: var(--color-primary-100);
+                /* 容器內文字水平置中 */
+                text-align: center;
+                height: 290px;
+            }
+
+            .header nav ul {
+                display: block;
+
+            }
+
+            .header nav ul li {
+                float: none;
+                /* 外觀重置: 重置 <ul> 與 <li> 預設每項目最前面加上得「黑色實心圓點（Bullet）」*/
+                list-style-type: none;
+                padding: 1px 0;
+                width: 100%;
+
+            }
+
+            .header nav ul li a {
+                display: block;
+                /* padding: y x;  */
+                padding: 10px 12px;
+                margin-top: 5px;
+                font-size: 15px;
+                font-weight: bolder;
+                margin-left: 10px;
+                margin-right: 10px;
+                box-shadow: 1px 2px 2px var(--color-secondary-900);
+            }
+
+            .content {
+                margin-top: auto;
+                padding: 20px 10px;
+            }
+
+            .content h1 {
+                text-align: center;
+                font-size: 32px;
+                font-weight: bolder;
+                color: var(--color-neutral-800);
+                margin-top: 0px;
+                margin-bottom: 10px;
+            }
+
+            .content p {
+                text-align: justify;
+                font-size: 14px;
+                margin: 0px 10px;
+                letter-spacing: 1.8px;
+                line-height: 1.8rem;
+            }
+
+            .content a {
+                display: block;
+                color: var(--color-secondary-100);
+                font-weight: bolder;
+                width: 100px;
+                height: 30px;
+                padding: 3px 0;
+                background-color: var(--color-neutral-500);
+                margin: 30px 10px;
+                text-align: center;
+                text-decoration: none;
+            }
+
+            .footer {
+                background-color: var(--color-secondary-500);
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-align: center;
+                color: var(--color-neutral-100);
+                font-size: 14px;
+                font-weight: bolder;
+                margin-top: 5px;
+                margin-bottom: 0px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="logo"></div>
+            <nav>
+                <ul>
+                    <li><a href="">首頁</a></li>
+                    <li><a href="">最新消息</a></li>
+                    <li><a href="">合作店家</a></li>
+                    <li><a href="">關於我們</a></li>
+                    <li><a href="">聯絡我們</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <h1>THAI THAI SAY HELLO</h1>
+            <p>浪漫哈哈也在算是明星居住帶著有限公司經驗註冊時間，選複，信譽你好十年電視台，反對這樣技能依靠一台，你看歡迎為你交通快捷不少終於我國專區疾病。郵箱你看大多就不能學到每年命令簡單同一幫我論壇決定森林，結果針對一對殺手卻是得到完美難道美容基隆，見面資產免費版大多數，天氣用品幫我中壢幾天至少也可以上短信，姑娘方便利潤電腦您的瀏覽原來當然電話眼光緩緩第二次，世界出生圍繞面向作用一部分後面豐富原則廣播標。
+            </p>
+            <br>
+            <p>便宜我不超市，學校生日很難，少年表情廠商，自主型號專區的人特殊新人理念管理員我把手段，本科大全讓她，後果直接精美大聲厲害出處開始手機鈴聲玩具版面多少，教程通用簡體，角度需求地方部門外觀避免行政種子一半老人圖片，陷入新增，不如和平公告明年有一定，他們的設定。
+            </p>
+            <a href="">了解更多</a>
+        </div>
+        <div class="footer">
+            <p>@thaihand. 2023/03/06</p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+
+body {font-family: "Noto Sans TC", sans-serif;}
+
+
+:root {
+  /* --- Primary: 森林深綠系列 (核心品牌感) --- */
+  --color-primary-50: #F2F3E8;
+  /* 極淺背景 */
+  --color-primary-100: #E1E4CD;
+  /* 輕微強調區塊 */
+  --color-primary-200: #C3C99C;
+  /* 禁用狀態按鈕 */
+  --color-primary-300: #A5AD6C;
+  /* 邊框色 */
+  --color-primary-400: #868F42;
+  /* 副動作按鈕 */
+  --color-primary-500: #41431B;
+  /* 主品牌色 (原始色) */
+  --color-primary-600: #383A17;
+  /* 懸停狀態 (Hover) */
+  --color-primary-700: #2F3113;
+  /* 點擊狀態 (Active) */
+  --color-primary-800: #26280F;
+  /* 深色頁尾文字 */
+  --color-primary-900: #1A1B0B;
+  /* 接近黑色的森林綠 */
+
+  /* --- Secondary: 鼠尾草綠系列 (柔和過渡) --- */
+  --color-secondary-100: #F5F6F0;
+  /* 次要區塊背景 */
+  --color-secondary-300: #CBD2B2;
+  /* 裝飾性線條 */
+  --color-secondary-500: #AEB784;
+  /* 輔助色 (原始色) */
+  --color-secondary-700: #7e8755;
+  /* 導覽連結 */
+  --color-secondary-900: #4D5234;
+  /* 深色圖標 */
+
+  /* --- Neutral: 奶油大地色系列 (全局排版) --- */
+  --color-neutral-50: #F8F4E1;
+  /* 網頁全域背景 (原始色) */
+  --color-neutral-100: #F4F0D5;
+  /* 卡片或容器背景 */
+  --color-neutral-200: #EBE3C1;
+  /* 次要容器 (原始色) */
+  --color-neutral-300: #DED5B0;
+  /* 控制項邊框 */
+  --color-neutral-400: #CFC298;
+  /* 禁用文字 */
+  --color-neutral-500: #B0A278;
+  /* 說明文字 */
+  --color-neutral-600: #8C7F5A;
+  /* 副標題 */
+  --color-neutral-700: #665C41;
+  /* 標準內文 */
+  --color-neutral-800: #453E2C;
+  /* 標題文字 */
+  --color-neutral-900: #242017;
+  /* 深墨色 (排版最高對比) */
+
+  /* --- Semantic: 語義色系列 (基於大地色系的調整) --- */
+  --color-success: #606C38;
+  /* 成功 (深橄欖) */
+  --color-warning: #DDA15E;
+  /* 警告 (土黃棕) */
+  --color-error: #8B4513;
+  /* 錯誤 (泥土紅) */
+  --color-info: #5C6D70;
+  /* 資訊 (霧霾藍綠) */
+  --color-white: #FFFFFF;
+  /* 純白 */
+}

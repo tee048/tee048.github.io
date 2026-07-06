@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/mycss.css">
+
+    <title>未來學苑文理補習班</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+
+        :root {
+
+
+            --main-100: #f5f7fa;
+            --main-200: #e8edf3;
+            --main-300: #d7dee8;
+            --main-500: #5b6b7a;
+            --main-700: #2f3e4d;
+            --main-900: #16202a;
+
+            --accent-300: #ff9f43;
+            --accent-500: #ff7f11;
+            --accent-700: #d96500;
+
+            --dark-100: #3c4652;
+            --dark-300: #26313d;
+            --dark-500: #1c242e;
+            --dark-700: #131920;
+            --dark-900: #0b0f14;
+
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .body {
+            background-color: var(--main-200);
+            font-family: "Noto Sans TC", sans-serif;
+        }
+
+        .wrapper {
+            width: 1024px;
+            margin: 20px auto;
+            background-color: var(--white);
+            box-shadow: 1px 1px 2px var(--dark-300);
+            
+
+        }
+
+        .header {
+            background-color: var(--main-500);
+            padding: 5px 0;
+            margin: auto;
+
+        }
+
+        .header-title h2 {
+            color: var(--white);
+            text-align: center;
+            font-weight: bolder;
+            font-size: px;
+            margin: 6px;
+        }
+
+        .logo {
+            background-image: url(/0310-selfpractice/unnamed.jpg);
+            height: 260px;
+            width: 100%;
+            background-position: center center;
+            background-size: cover;
+            margin-bottom: 5px;
+        }
+
+        .header nav {
+            text-align: center;
+        }
+
+        .header nav ul {
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .header nav ul li {
+            list-style-type: none;
+            text-align: center;
+            display: inline-block;
+
+        }
+
+        .header nav ul li a {
+            background-color: var(--main-700);
+            border-radius: 8px;
+            margin: 2px 10px;
+            font-size: 24px;
+            font-weight: bolder;
+            color: var(--white);
+            display: block;
+            padding: 3px 10px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 1px 1px 2px var(--dark-900);
+        }
+
+        .hero-title h1,
+        .list-title h2,
+        .teacher-title h2 {
+            font-size: 50px;
+            text-align: center;
+            color: var(--dark-500);
+
+        }
+
+
+        .hero {
+            background-color: var(--main-200);
+            padding: 20px;
+        }
+
+        .hero p {
+            text-align: center;
+            font-size: 20px;
+            line-height: 2rem;
+            letter-spacing: 1.1px;
+            color: var(--dark-100);
+        }
+
+        .hero a {
+            display: block;
+            background-color: var(--accent-700);
+            text-decoration: none;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bolder;
+            line-height: 35px;
+            color: var(--white);
+            width: 150px;
+            height: 35px;
+            margin: 10px auto;
+            border-radius: 8px;
+            box-shadow:1px 1px 2px var(--dark-100);
+
+        }
+
+        .list {
+            background-color: var(--white);
+            padding: 20px 70px;
+        }
+
+        .list-item {
+            display: block;
+            padding: 10px;
+            margin: 5px;
+            background-color: var(--main-200);
+            border-radius: 8px;
+        }
+
+        .teacher{
+            background-color: #e6e2e2;
+            padding: 20px 70px;
+            margin-bottom: 10px;
+        }
+
+        .teacher-item{
+            display: block;
+            padding: 10px;
+            background-color: var(--white);
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 1px 1px 3px var(--main-500);
+
+        }
+
+        .teacher-item h4{
+            font-size: 22px;
+            font-weight: bolder;
+            color: var(--dark-300);
+        }
+
+        .teacher-item p {
+            font-size: 18px;
+            color: var(--main-500);
+            margin: 5px auto;
+        }
+
+        .contact {
+            padding: 20px 70px;
+            background-color: var(--main-300);
+        }
+
+        .contact-title {
+            text-align: center;
+            
+        }
+
+        .contact-title p {
+            font-size: 20px;
+            line-height: 2rem;
+            color: var(--dark-500);
+        }
+
+        .footer{
+            background-color: var(--main-500);
+            padding: 5px;
+        }
+
+        .footer p{
+            text-align: center;
+            color: var(--white);
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+
+            <div class="header-title">
+                <h2>未來學苑文理補習班</h2>
+            </div>
+
+            <div class="logo">
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="">招生資訊</a></li>
+                    <li><a href="">升學榜單</a></li>
+                    <li><a href="">師資介紹</a></li>
+                    <li><a href="">課程時間</a></li>
+                    <li><a href="">校區資訊</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="hero">
+            <div class="hero-title">
+                <h1>國中·高中升學輔導</h1>
+            </div>
+            <p>小班制教學 x 專業師資 x 升學規劃</p>
+            <P>讓孩子在穩定的學習節奏中持續進步</P>
+            <a href="">預約試聽</a>
+        </div>
+
+
+        <div class="list">
+            <div class="list-title">
+                <h2>升學榜單</h2>
+            </div>
+            <div class="list-item">
+                <p>113年 台中一中錄取 12 人</p>
+            </div>
+            <div class="list-item">
+                <p>113年 台中女中錄取 9 人</p>
+            </div>
+            <div class="list-item">
+                <p>113年 曉明女中錄取 4 人</p>
+            </div>
+        </div>
+
+
+        <div class="teacher">
+            <div class="teacher-title">
+                <h2>師資介紹</h2>
+            </div>
+            <div class="teacher-item">
+                <h4>數學 | 林老師</h4>
+                <p>15 年教學經驗，專長建立數學觀念與解題策略。</p>
+            </div>
+            <div class="teacher-item">
+                <h4>自然 | 黃老師</h4>
+                <p>擅長統整自然科重點，讓複雜觀念變得容易理解。</p>
+            </div>
+        </div>
+
+
+        <div class="contact">
+            <div class="contact-title">
+            <p>地址：台中市北區學士路 88 號</p>
+            <p>電話：04-2233-6688</p>
+            <p>服務時間：13:00 - 21:30</p>
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <p>未來學苑文理補習班 © 2026</p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
