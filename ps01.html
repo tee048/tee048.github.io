@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>網頁名稱</title>
+    <title>the beatles｜Charlie Tee 平面作品</title>
     <style>
         :root {
             --ink: #5a4129;
@@ -15,15 +15,10 @@
             --paper-shadow: rgba(90, 65, 41, 0.18);
         }
 
-        .intro {
-            font-size: clamp(1.5rem, 4vw, 3.5rem);
-            color: var(--ui-text-main);
-        }
-
         body {
-            background-image: url(U_img/bgi.png);
-            font-family: 'Noto Serif TC', sans-serif;
-
+            background-image: url(./U_img/bgi.png);
+            font-family: 'IBM Plex Mono', 'Noto Serif TC', sans-serif;
+            color: var(--ink);
         }
 
         /* ---------- 導覽列 ---------- */
@@ -66,54 +61,107 @@
             border-bottom-color: var(--line);
         }
 
-        .work01 img {
-            background-size: cover;
-            background-position: center center;
-            width: 60vw;
-            height: auto;
-            transition: 0.3s ease;
-        }
-
-        .work01 img:hover {
-            transform: translateY(5rem) scale(1.2);
+        /* ---------- 作品展示 ---------- */
+        .work-detail {
+            padding-top: 5.5rem; /* 預留固定導覽列高度，內容不被遮住 */
         }
 
         .work-caption {
             text-align: center;
-            margin-top: 0.8rem;
         }
 
         .work-title {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #5a4129;
+            color: var(--ink);
             margin-bottom: 0.4rem;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
         }
 
         .work-tag {
             display: inline-block;
             font-size: 0.7rem;
-            color: #8a7060;
-            border: 1px solid #cda37f;
+            color: var(--ink-soft);
+            border: 1px solid var(--line);
             border-radius: 20px;
             padding: 2px 10px;
             margin: 2px;
             letter-spacing: 0.05em;
+        }
+
+        .work01 img {
+            width: min(60vw, 900px);
+            height: auto;
+            box-shadow: 0 12px 30px var(--paper-shadow);
+            cursor: zoom-in;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .work01 img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px var(--paper-shadow);
+        }
+
+        /* 點擊放大檢視（取代原本 hover 位移，避免圖片跳動） */
+        .work01 img.zoomed {
+            width: min(92vw, 1400px);
+            cursor: zoom-out;
+        }
+
+        .zoom-hint {
+            font-size: 0.72rem;
+            color: var(--ink-soft);
+            letter-spacing: 0.1em;
+            margin-top: 0.8rem;
+        }
+
+        /* ---------- 作品間導覽 ---------- */
+        .work-nav {
+            display: flex;
             justify-content: center;
+            gap: 2rem;
+            padding: 2.5rem 0 3.5rem;
+            flex-wrap: wrap;
+        }
+
+        .work-nav a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 6px 18px;
+            background: rgba(250, 246, 238, 0.8);
+            transition: color 0.2s, background 0.2s, transform 0.2s;
+        }
+
+        .work-nav a:hover,
+        .work-nav a:focus-visible {
+            color: var(--ink);
+            background: rgba(250, 246, 238, 1);
+            transform: translateY(-2px);
         }
 
         @media screen and (max-width:576px) {
             .work01 img {
-                background-size: cover;
-                background-position: center center;
-                width: 80vw;
-                height: auto;
+                width: 88vw;
+            }
+
+            .work01 img.zoomed {
+                width: 96vw;
             }
 
             .site-nav .nav-links a {
                 margin-left: 0.8rem;
                 font-size: 0.72rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .work01 img,
+            .work-nav a {
+                transition: none;
             }
         }
     </style>
@@ -122,32 +170,40 @@
 <body>
     <!-- 固定導覽列 -->
     <nav class="site-nav">
-        <a class="brand" href="index.html">CHARLIE TEE</a>
+        <a class="brand" href="userpage.html">CHARLIE TEE</a>
         <div class="nav-links">
-            <a href="index.html#works">WORKS</a>
-            <a href="index.html#graphic">GRAPHIC</a>
-            <a href="index.html#about">ABOUT</a>
+            <a href="userpage.html#works">WORKS</a>
+            <a href="userpage.html#graphic">GRAPHIC</a>
+            <a href="userpage.html#about">ABOUT</a>
         </div>
     </nav>
 
-    <section id="graphic-design" class="py-5">
+    <section id="graphic-design" class="work-detail py-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="work-caption py-3">
-                    <p class="work-title">平面作品</p>
-                    <span class="work-tag">phtoshop</span>
+                    <p class="work-title">the beatles</p>
+                    <span class="work-tag">photoshop</span>
                 </div>
-                <div class="work01 d-flex justify-content-center">
-                    <img src="U_img/beatles.png" alt="">
+                <div class="work01 d-flex flex-column align-items-center">
+                    <img src="./U_img/beatles.png" alt="the beatles 平面設計作品" id="workImage">
+                    <p class="zoom-hint">點擊圖片可放大檢視</p>
                 </div>
             </div>
-            </div>
+        </div>
 
+        <!-- 作品間導覽：不必回上一頁也能瀏覽 -->
+        <nav class="work-nav" aria-label="作品導覽">
+            <a href="userpage.html#graphic">← Back</a>
+            <a href="ps02.html">Next：DREAM LIST →</a>
+        </nav>
     </section>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        // 點擊圖片切換放大 / 縮小
+        const img = document.getElementById('workImage');
+        img.addEventListener('click', () => img.classList.toggle('zoomed'));
+    </script>
 </body>
 
 </html>

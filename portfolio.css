@@ -1,4 +1,4 @@
-        :root {
+:root {
             --ink: #5a4129;
             --ink-soft: #8a7060;
             --line: #cda37f;
@@ -99,12 +99,74 @@
         }
 
         .photo_box {
+            position: relative;
             aspect-ratio: 7 / 9;
             width: 100%;
             background-position: center center;
             background-size: cover;
             transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out, box-shadow 0.25s ease-in-out, filter 0.25s ease-in-out;
             will-change: transform, opacity;
+        }
+
+        /* ---------- 可點擊提示：小紙標籤「VIEW ↗」 ---------- */
+        .portfolio a .photo_box::after {
+            content: "VIEW ↗";
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: var(--ink);
+            background: rgba(250, 246, 238, 0.92);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 3px 10px;
+            box-shadow: 0 2px 6px var(--paper-shadow);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        .portfolio a:hover .photo_box::after,
+        .portfolio a:focus-visible .photo_box::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 觸控裝置沒有 hover，改為常駐淡淡顯示，手機使用者也知道可點 */
+        @media (hover: none) {
+            .portfolio a .photo_box::after {
+                opacity: 0.85;
+                transform: none;
+            }
+        }
+
+        /* ---------- 尚未完成的作品卡：明確標示，避免點了沒反應 ---------- */
+        .photo_box--upcoming {
+            filter: grayscale(0.8);
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .photo_box--upcoming::after {
+            content: "COMING SOON";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-6deg);
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--ink-soft);
+            border: 1.5px dashed var(--line);
+            border-radius: 4px;
+            padding: 6px 14px;
+            background: rgba(250, 246, 238, 0.85);
+        }
+
+        /* 未完成卡片不參與 hover 聚焦效果，也不放大 */
+        .portfolio:has(.photo_box:hover) .photo_box--upcoming {
+            opacity: 0.45;
         }
 
         .portfolio a {
@@ -123,6 +185,10 @@
                 transform: scale(1.05) rotate(3deg);
                 opacity: 1;
                 z-index: 10;
+            }
+
+            .photo_box--upcoming:hover {
+                transform: none;
             }
         }
 
