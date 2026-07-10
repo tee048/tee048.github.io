@@ -10,7 +10,7 @@
         }
 
         body {
-            background-image: url(./U_img/bgi.png);
+            background-image: url(./U_img_avif/bgi.avif);
             font-family: 'IBM Plex Mono', 'Noto Serif TC', sans-serif;
             overflow-x: hidden;
         }
@@ -237,7 +237,7 @@
 
         /* ---------- 平面作品區 ---------- */
         .work-section-bg {
-            background-image: url(./U_img/bgi4.png);
+            background-image: url(./U_img_avif/bgi4.avif);
             background-size: contain;
             background-position: center center;
             background-repeat: no-repeat;
@@ -269,7 +269,7 @@
             text-align: left;
             justify-content: center;
             padding: 2rem;
-            background-image: url(./U_img/bgi3.png);
+            background-image: url(./U_img_avif/bgi3.avif);
             transition: 0.1s ease-in-out;
             margin-bottom: 20px;
         }
@@ -281,7 +281,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url(./U_img/bgi2.png);
+            background-image: url(./U_img_avif/bgi2.avif);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 5;
         }
