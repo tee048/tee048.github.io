@@ -426,3 +426,12 @@
                 transition: none;
             }
         }
+        /* ---------- 作品一行描述 ---------- */
+        .work-desc {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--ink-soft);
+            line-height: 1.7;
+            margin: 0.3rem auto 0.5rem;
+            max-width: 90%;
+        }
