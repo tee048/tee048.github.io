@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>利陀桑親子館 - 報到系統</title>
+    <style>
+        :root {
+            --cream: #fdf8f3;
+            --warm-brown: #5a4129;
+            --wood: #cda37f;
+            --wood-light: #e8d0b5;
+            --wood-pale: #f5ebe0;
+            --green: #2d6b1d;
+            --green-light: #eaf3e7;
+            --text-main: #3d2e1e;
+            --text-muted: #8a7060;
+            --border: #e0c9b0;
+            --white: #ffffff;
+            --shadow-md: 0 4px 20px rgba(90, 65, 41, 0.12);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-full: 50px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            background-color: rgb(240, 247, 244);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Noto Sans TC', system-ui, sans-serif;
+            color: var(--text-main);
+        }
+
+        .deco01 {
+            position: fixed;
+            top: -30px;
+            right: 0px;
+            width: clamp(150px, 25vw, 500px);
+            height: auto;
+            z-index: 0;
+        }
+
+        .deco02 {
+            position: fixed;
+            bottom: -10px;
+            left: 0px;
+            width: clamp(150px, 25vw, 500px);
+            height: auto;
+            z-index: 0;
+        }
+
+        .deco-dots {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: clamp(150px, 35vw, 500px);
+            height: auto;
+            z-index: 0;
+        }
+
+        .deco-lnc {
+            position: fixed;
+            bottom: -10px;
+            right: 90px;
+            width: clamp(150px, 25vw, 500px);
+            height: auto;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .chin_quest {
+            color: #2d6b1d;
+            font-weight: bolder;
+            font-size: medium;
+            margin-top: 1rem;
+        }
+
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 1.75rem 1.75rem 2rem;
+            width: 100%;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #f9e4b7, #f5d08a);
+            border-radius: var(--radius-sm);
+            padding: 0.85rem 1.1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--warm-brown);
+            margin-bottom: 1.1rem;
+            border-left: 4px solid var(--wood);
+        }
+
+        .field-label {
+            font-family: 'Noto Serif TC', serif;
+            color: var(--green);
+            font-weight: 600;
+            font-size: 0.88rem;
+            margin-top: 1.1rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-label::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 13px;
+            background: var(--wood);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .field-input {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            color: var(--text-main);
+            border-radius: var(--radius-sm);
+            padding: 0.65rem 0.95rem;
+            font-size: 0.93rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 500;
+            background: var(--cream);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: var(--wood);
+            box-shadow: 0 0 0 3px rgba(205, 163, 127, 0.15);
+            background: var(--white);
+        }
+
+        select.field-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 13px center;
+            padding-right: 2.25rem;
+        }
+
+        .phone-input-wrap {
+            position: relative;
+        }
+
+        .phone-input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .phone-input {
+            width: 100%;
+            border: 2px solid var(--border);
+            color: var(--text-main);
+            border-radius: var(--radius-full);
+            padding: 0.9rem 1.2rem 0.9rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            background: var(--white);
+            text-align: center;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: var(--wood);
+            box-shadow: 0 0 0 3px rgba(205, 163, 127, 0.2);
+        }
+
+        .phone-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+
+        .sub-field {
+            padding-left: 0.75rem;
+            border-left: 3px solid var(--wood-light);
+            margin-top: 0.4rem;
+        }
+
+        .number-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.4rem;
+        }
+
+        .number-row span {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            min-width: 2.5rem;
+        }
+
+        .number-input {
+            width: 68px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.45rem 0.4rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: center;
+            background: var(--cream);
+        }
+
+        .number-input:focus {
+            outline: none;
+            border-color: var(--wood);
+        }
+
+        .identity-group {
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .identity-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.65rem 0.95rem;
+            border-bottom: 1px solid var(--wood-pale);
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 0.93rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .identity-item:last-child {
+            border-bottom: none;
+        }
+
+        .identity-item:hover {
+            background: var(--green-light);
+        }
+
+        .identity-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--green);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .child-card {
+            background: var(--cream);
+            border: 1.5px solid var(--wood-light);
+            border-radius: var(--radius-sm);
+            padding: 0.9rem 1rem;
+            margin-top: 0.65rem;
+        }
+
+        .child-card-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--warm-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1.5px solid var(--wood-pale);
+            margin: 1.1rem 0;
+        }
+
+        .btn-primary-custom {
+            width: 100%;
+            background: linear-gradient(135deg, var(--wood), #b8845a);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-full);
+            padding: 0.85rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            margin-top: 1.25rem;
+            box-shadow: 0 3px 10px rgba(205, 163, 127, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary-custom:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary-custom:disabled {
+            background: #d4d4d4;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-green-custom {
+            width: 100%;
+            background: linear-gradient(135deg, var(--green), #1e4d12);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-full);
+            padding: 0.85rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            margin-top: 1rem;
+            box-shadow: 0 3px 10px rgba(45, 107, 29, 0.28);
+        }
+
+        .btn-green-custom:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-green-custom:disabled {
+            background: #d4d4d4;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-ghost-custom {
+            width: 100%;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-full);
+            padding: 0.72rem 1.5rem;
+            font-size: 0.93rem;
+            font-weight: 500;
+            font-family: 'Noto Sans TC', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s;
+            margin-top: 0.6rem;
+        }
+
+        .btn-ghost-custom:hover {
+            background: var(--wood-pale);
+        }
+
+        .checkin-person-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.7rem 0.95rem;
+            margin-bottom: 0.45rem;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+            font-size: 0.93rem;
+            font-weight: 500;
+        }
+
+        .checkin-person-item:hover {
+            border-color: var(--wood);
+            background: var(--wood-pale);
+        }
+
+        .checkin-person-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--green);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .add-person-section {
+            background: var(--cream);
+            border: 1.5px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.95rem 1.1rem;
+            margin-top: 1.1rem;
+        }
+
+        .add-person-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.65rem;
+            letter-spacing: 0.04em;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .success-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 0.4rem;
+        }
+
+        @media (max-width: 480px) {
+            .form-card {
+                padding: 1.25rem 1.1rem 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img class="deco01" src="./k2/bigrcircle.svg" alt="裝飾圓形">
+        <img class="deco02" src="./k2/biglcircle02.svg" alt="裝飾圓形">
+        <img class="deco-dots" src="./k2/deco-dots.svg" alt="裝飾點點">
+        <img class="deco-lnc" src="./k2/lines.svg" alt="裝飾線條">
+    </header>
+
+    <div id="app" class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <main class="container2 text-center" style="width:100%; max-width:480px;">
+
+            <div class="title-group">
+                <div class="display-3 mb-4" style="color: #5a4129;">利陀桑親子館</div>
+                <div class="h2 mb-5" style="color: #b4916e;">快樂學習 幸福成長</div>
+            </div>
+
+            <div class="body-deco d-flex justify-content-center gap-5 my-4">
+                <img src="./k2/house.svg" alt="房子圖示">
+                <img src="./k2/plant.svg" alt="植物圖示">
+            </div>
+
+            <!-- ===== 報到輸入區 ===== -->
+            <div v-show="currentView === 'checkin'">
+                <form @submit.prevent="handlePhoneSubmit">
+                    <div class="form-card text-start">
+
+                        <div class="phone-input-wrap">
+                            <span class="phone-input-icon">
+                                <img src="./k2/Phone.svg" alt="" width="22">
+                            </span>
+                            <input class="phone-input" type="tel" v-model="phone" pattern="09[0-9]{8}" required
+                                maxlength="10" placeholder="請輸入家長手機號碼" :disabled="isLoading">
+                        </div>
+
+                        <!-- 新會員表單 -->
+                        <div v-if="showNewMemberFields">
+                            <div class="welcome-banner mt-3">
+                                🌱 歡迎首次入館，請填寫基本資料
+                            </div>
+
+                            <!-- Q1：填答者姓名 + 性別 -->
+                            <div class="field-label">填答者姓名</div>
+                            <input class="field-input" type="text" v-model="newMember.parent_name" placeholder="請輸入姓名"
+                                required>
+
+                            <div class="field-label">填答者性別</div>
+                            <select class="field-input" v-model="newMember.parent_gender" required>
+                                <option value="" disabled>請選擇性別</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                                <option value="其他">其他</option>
+                            </select>
+
+                            <hr class="section-divider">
+
+                            <!-- Q2：有其他陪同成人 -->
+                            <div class="field-label">有其他陪同成人</div>
+                            <label class="checkin-person-item" style="margin-bottom:0.75rem;">
+                                <input type="checkbox" v-model="newMember.has_companions">
+                                <span>本次有其他陪同成人入館</span>
+                            </label>
+
+                            <div v-if="newMember.has_companions">
+                                <div v-for="(companion, idx) in newMember.companions" :key="idx" class="child-card">
+                                    <div class="child-card-title">陪同成人 {{ idx + 1 }}</div>
+                                    <input class="field-input mb-2" type="text" v-model="companion.name"
+                                        :placeholder="'陪同成人 ' + (idx + 1) + ' 姓名'" required>
+                                    <select class="field-input" v-model="companion.gender" required>
+                                        <option value="" disabled>請選擇性別</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn-ghost-custom" style="margin-top:0.5rem;"
+                                    @click="addNewCompanion">＋ 新增陪同成人</button>
+                                <button type="button" class="btn-ghost-custom" style="margin-top:0.4rem;"
+                                    v-if="newMember.companions.length > 1"
+                                    @click="removeNewCompanion">－ 移除最後一位</button>
+                            </div>
+
+                            <hr class="section-divider">
+
+                            <div class="field-label">您來自哪裡？</div>
+                            <select class="field-input" v-model="newMember.city_region" @change="handleCityChange"
+                                required>
+                                <option value="" disabled>請選擇區域</option>
+                                <option value="桃園市中壢區">桃園市 中壢區</option>
+                                <option value="桃園市其他行政區">桃園市 其他行政區</option>
+                                <option value="其他縣市">其他縣市</option>
+                            </select>
+
+                            <div class="sub-field" v-show="newMember.city_region === '桃園市中壢區'">
+                                <select class="field-input mt-2" v-model="newMember.sub_district">
+                                    <option value="">您來自中壢區的哪一個里呢？</option>
+                                    <option value="中壢里">中壢里</option>
+                                    <option value="中原里">中原里</option>
+                                    <option value="中正里">中正里</option>
+                                    <option value="中山里">中山里</option>
+                                    <option value="中華里">中華里</option>
+                                    <option value="仁愛里">仁愛里</option>
+                                    <option value="仁德里">仁德里</option>
+                                    <option value="內壢里">內壢里</option>
+                                    <option value="內定里">內定里</option>
+                                    <option value="文化里">文化里</option>
+                                    <option value="月祥里">月祥里</option>
+                                    <option value="月眉里">月眉里</option>
+                                    <option value="石頭里">石頭里</option>
+                                    <option value="光明里">光明里</option>
+                                    <option value="自立里">自立里</option>
+                                    <option value="自強里">自強里</option>
+                                    <option value="芝芭里">芝芭里</option>
+                                    <option value="宏勵里">宏勵里</option>
+                                    <option value="東興里">東興里</option>
+                                    <option value="忠孝里">忠孝里</option>
+                                    <option value="幸福里">幸福里</option>
+                                    <option value="長興里">長興里</option>
+                                    <option value="青埔里">青埔里</option>
+                                    <option value="後寮里">後寮里</option>
+                                    <option value="建國里">建國里</option>
+                                    <option value="洽溪里">洽溪里</option>
+                                    <option value="春德里">春德里</option>
+                                    <option value="美華里">美華里</option>
+                                    <option value="埔頂里">埔頂里</option>
+                                    <option value="振興里">振興里</option>
+                                    <option value="健行里">健行里</option>
+                                    <option value="崇德里">崇德里</option>
+                                    <option value="過嶺里">過嶺里</option>
+                                    <option value="新街里">新街里</option>
+                                    <option value="廣榮里">廣榮里</option>
+                                    <option value="興仁里">興仁里</option>
+                                    <option value="龍岡里">龍岡里</option>
+                                    <option value="龍慈里">龍慈里</option>
+                                    <option value="龍慈里">松嶺里</option>
+                                    <option value="龍慈里">青園里</option>
+                                    <option value="龍慈里">青航里</option>
+                                </select>
+                            </div>
+
+                            <div class="sub-field" v-show="newMember.city_region === '桃園市其他行政區'">
+                                <select class="field-input mt-2" v-model="newMember.taoyuan_district">
+                                    <option value="">請選擇行政區</option>
+                                    <option value="桃園區">桃園區</option>
+                                    <option value="大溪區">大溪區</option>
+                                    <option value="楊梅區">楊梅區</option>
+                                    <option value="蘆竹區">蘆竹區</option>
+                                    <option value="大園區">大園區</option>
+                                    <option value="龜山區">龜山區</option>
+                                    <option value="八德區">八德區</option>
+                                    <option value="龍潭區">龍潭區</option>
+                                    <option value="平鎮區">平鎮區</option>
+                                    <option value="新屋區">新屋區</option>
+                                    <option value="觀音區">觀音區</option>
+                                    <option value="復興區">復興區</option>
+                                </select>
+                            </div>
+
+                            <div class="sub-field" v-show="newMember.city_region === '其他縣市'">
+                                <input class="field-input mt-2" type="text" v-model="newMember.other_city"
+                                    placeholder="請輸入您的縣市與區域">
+                            </div>
+
+                            <div class="field-label">本次入館目的</div>
+                            <select class="field-input" v-model="newMember.purpose" required>
+                                <option value="" disabled>請選擇目的</option>
+                                <option value="玩玩具">玩玩具</option>
+                                <option value="上課/參加活動">上課/參加活動</option>
+                                <option value="借用/歸還玩具">借用/歸還玩具</option>
+                                <option value="問題諮詢">問題諮詢</option>
+                                <option value="其他">其他</option>
+                            </select>
+
+                            <div class="field-label">家庭文化或族群背景（可複選）</div>
+                            <div class="identity-group">
+                                <label class="identity-item" v-for="opt in identityOptions" :key="opt">
+                                    <input type="checkbox" v-model="newMember.identity" :value="opt">
+                                    {{ opt }}
+                                </label>
+                            </div>
+                            <div class="sub-field mt-2" v-show="newMember.identity.includes('非本國籍')">
+                                <input class="field-input" type="text" v-model="newMember.identity_country"
+                                    placeholder="請輸入您來自的國家">
+                            </div>
+
+                            <div class="field-label">與幼兒的關係</div>
+                            <select class="field-input" v-model="newMember.relationship" required>
+                                <option value="請選擇關係" disabled>請選擇關係</option>
+                                <option value="父母與孩子">父母與孩子</option>
+                                <option value="祖父母/孫子女">祖父母/孫子女</option>
+                                <option value="親屬">親屬</option>
+                                <option value="社福/教育機構">社福/教育機構</option>
+                                <option value="托育人員/保母">托育人員/保母</option>
+                                <option value="其他">其他</option>
+                            </select>
+
+                            <div class="field-label">幼兒人數與資訊</div>
+                            <div class="number-row">
+                                <span>入館幼兒總數</span>
+                                <input class="number-input" type="number" v-model.number="newMember.child_count"
+                                    @input="updateChildFields" min="0" max="5">
+                            </div>
+
+                            <div v-for="(child, index) in newMember.children" :key="index" class="child-card">
+                                <div class="child-card-title">幼兒 {{ index + 1 }}</div>
+                                <input class="field-input mb-2" type="text" v-model="child.name"
+                                    :placeholder="'幼兒 ' + (index + 1) + ' 姓名'" required>
+                                <div class="d-flex gap-2">
+                                    <select class="field-input" v-model="child.gender" style="flex:1" required>
+                                        <option value="">性別</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                    <input class="field-input" type="date" v-model="child.birthday" style="flex:2"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary-custom" :disabled="isLoading">
+                            {{ isLoading ? '處理中…' : '開始報到 →' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ===== 舊會員勾選區 ===== -->
+            <div v-show="currentView === 'oldMember'">
+                <div class="form-card text-start">
+                    <div class="text-center mb-3">
+                        <div
+                            style="font-family:'Noto Serif TC',serif; font-size:1.25rem; font-weight:700; color:var(--warm-brown);">
+                            請勾選本次入館人員
+                        </div>
+                    </div>
+
+                    <!-- 本次入館家長（勾選已有家長） -->
+                    <div class="field-label">本次入館家長（可多選）</div>
+                    <div v-for="parent in oldMemberData.parents" :key="parent.id" style="margin-bottom:0.45rem;">
+                        <label class="checkin-person-item" style="margin-bottom:0; cursor:pointer;">
+                            <input type="checkbox" v-model="selectedParentIds" :value="parent.id">
+                            <span>{{ parent.name }}</span>
+                            <span v-if="parent.gender" class="badge ms-auto"
+                                :style="parent.gender === '男' ? 'background:rgba(59,130,246,0.12);color:#1d4ed8;' : parent.gender === '女' ? 'background:rgba(236,72,153,0.12);color:#be185d;' : 'background:#f3f4f6;color:#6b7280;'"
+                                style="font-size:0.75rem;">{{ parent.gender }}</span>
+                        </label>
+                        <!-- 若 gender 為空且已被勾選，展開性別補填 -->
+                        <div v-if="!parent.gender && selectedParentIds.includes(parent.id)"
+                            class="d-flex align-items-center gap-2 ps-3 py-2"
+                            style="background:var(--cream); border:1.5px solid var(--border); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm);">
+                            <span style="font-size:0.83rem; color:var(--text-muted); white-space:nowrap;">請選擇性別：</span>
+                            <label class="d-flex align-items-center gap-1" style="font-size:0.85rem; cursor:pointer; margin:0;">
+                                <input type="radio" :name="'pgender_' + parent.id" value="男"
+                                    v-model="parent.gender" style="accent-color:var(--green);"> 男
+                            </label>
+                            <label class="d-flex align-items-center gap-1" style="font-size:0.85rem; cursor:pointer; margin:0;">
+                                <input type="radio" :name="'pgender_' + parent.id" value="女"
+                                    v-model="parent.gender" style="accent-color:var(--green);"> 女
+                            </label>
+                            <label class="d-flex align-items-center gap-1" style="font-size:0.85rem; cursor:pointer; margin:0;">
+                                <input type="radio" :name="'pgender_' + parent.id" value="其他"
+                                    v-model="parent.gender" style="accent-color:var(--green);"> 其他
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 新增陪同成人 -->
+                    <div class="field-label" style="margin-top:1rem;">有其他陪同成人</div>
+                    <label class="checkin-person-item" style="margin-bottom:0.75rem;">
+                        <input type="checkbox" v-model="oldCheckin.has_companions">
+                        <span>本次有其他陪同成人入館</span>
+                    </label>
+
+                    <div v-if="oldCheckin.has_companions">
+                        <div v-for="(companion, idx) in oldCheckin.companions" :key="idx" class="child-card">
+                            <div class="child-card-title">陪同成人 {{ idx + 1 }}</div>
+                            <input class="field-input mb-2" type="text" v-model="companion.name"
+                                :placeholder="'陪同成人 ' + (idx + 1) + ' 姓名'">
+                            <select class="field-input" v-model="companion.gender">
+                                <option value="" disabled>請選擇性別</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-ghost-custom" style="margin-top:0.5rem;"
+                            @click="addOldCompanion">＋ 新增陪同成人</button>
+                        <button type="button" class="btn-ghost-custom" style="margin-top:0.4rem;"
+                            v-if="oldCheckin.companions.length > 1"
+                            @click="removeOldCompanion">－ 移除最後一位</button>
+                    </div>
+
+                    <!-- 本次入館幼兒 -->
+                    <div class="field-label" style="margin-top:1rem;">本次入館幼兒（可多選）</div>
+                    <label v-for="child in oldMemberData.children" :key="child.id" class="checkin-person-item"
+                        :style="isOverSchoolAge(child.birthday) ? 'opacity:0.45;pointer-events:none;' : ''">
+                        <input type="checkbox" v-model="selectedChildren" :value="child.id"
+                            :disabled="isOverSchoolAge(child.birthday)">
+                        <span>{{ child.name }}
+                            <span v-if="isOverSchoolAge(child.birthday)"
+                                style="color:#dc3545;font-size:0.78rem;font-weight:600;margin-left:4px;">
+                                （已屆齡）
+                            </span>
+                        </span>
+                        <span style="color:var(--text-muted); font-size:0.83rem; margin-left:auto;">
+                            {{ child.gender }}・{{ calculateAge(child.birthday) }}
+                        </span>
+                    </label>
+
+                    <hr class="section-divider">
+
+                    <div class="field-label">本次入館目的</div>
+                    <select class="field-input" v-model="oldCheckin.purpose" required>
+                        <option value="" disabled>請選擇目的</option>
+                        <option value="玩玩具">玩玩具</option>
+                        <option value="上課/參加活動">上課/參加活動</option>
+                        <option value="借用/歸還玩具">借用/歸還玩具</option>
+                        <option value="問題諮詢">問題諮詢</option>
+                        <option value="其他">其他</option>
+                    </select>
+
+                    <!-- 首次入館（僅透過網路預約連動建立）會員，需補填完整問卷資料 -->
+                    <template v-if="profileIncomplete">
+                        <hr class="section-divider">
+                        <div class="welcome-banner mb-2" style="font-size:0.85rem;">
+                            📋 您是首次來館，請協助補填以下基本資料（僅需填寫一次）
+                        </div>
+
+                        <div class="field-label">您來自哪裡？</div>
+                        <select class="field-input" v-model="profileForm.city_region" @change="handleProfileCityChange"
+                            required>
+                            <option value="" disabled>請選擇區域</option>
+                            <option value="桃園市中壢區">桃園市 中壢區</option>
+                            <option value="桃園市其他行政區">桃園市 其他行政區</option>
+                            <option value="其他縣市">其他縣市</option>
+                        </select>
+
+                        <div class="sub-field" v-show="profileForm.city_region === '桃園市中壢區'">
+                            <select class="field-input mt-2" v-model="profileForm.sub_district">
+                                <option value="">您來自中壢區的哪一個里呢？</option>
+                                <option value="中壢里">中壢里</option>
+                                <option value="中原里">中原里</option>
+                                <option value="中正里">中正里</option>
+                                <option value="中山里">中山里</option>
+                                <option value="中華里">中華里</option>
+                                <option value="仁愛里">仁愛里</option>
+                                <option value="仁德里">仁德里</option>
+                                <option value="內壢里">內壢里</option>
+                                <option value="內定里">內定里</option>
+                                <option value="文化里">文化里</option>
+                                <option value="月祥里">月祥里</option>
+                                <option value="月眉里">月眉里</option>
+                                <option value="石頭里">石頭里</option>
+                                <option value="光明里">光明里</option>
+                                <option value="自立里">自立里</option>
+                                <option value="自強里">自強里</option>
+                                <option value="芝芭里">芝芭里</option>
+                                <option value="宏勵里">宏勵里</option>
+                                <option value="東興里">東興里</option>
+                                <option value="忠孝里">忠孝里</option>
+                                <option value="幸福里">幸福里</option>
+                                <option value="長興里">長興里</option>
+                                <option value="青埔里">青埔里</option>
+                                <option value="後寮里">後寮里</option>
+                                <option value="建國里">建國里</option>
+                                <option value="洽溪里">洽溪里</option>
+                                <option value="春德里">春德里</option>
+                                <option value="美華里">美華里</option>
+                                <option value="埔頂里">埔頂里</option>
+                                <option value="振興里">振興里</option>
+                                <option value="健行里">健行里</option>
+                                <option value="崇德里">崇德里</option>
+                                <option value="過嶺里">過嶺里</option>
+                                <option value="新街里">新街里</option>
+                                <option value="廣榮里">廣榮里</option>
+                                <option value="興仁里">興仁里</option>
+                                <option value="龍岡里">龍岡里</option>
+                                <option value="龍慈里">龍慈里</option>
+                                <option value="龍慈里">松嶺里</option>
+                                <option value="龍慈里">青園里</option>
+                                <option value="龍慈里">青航里</option>
+                            </select>
+                        </div>
+
+                        <div class="sub-field" v-show="profileForm.city_region === '桃園市其他行政區'">
+                            <select class="field-input mt-2" v-model="profileForm.taoyuan_district">
+                                <option value="">請選擇行政區</option>
+                                <option value="桃園區">桃園區</option>
+                                <option value="大溪區">大溪區</option>
+                                <option value="楊梅區">楊梅區</option>
+                                <option value="蘆竹區">蘆竹區</option>
+                                <option value="大園區">大園區</option>
+                                <option value="龜山區">龜山區</option>
+                                <option value="八德區">八德區</option>
+                                <option value="龍潭區">龍潭區</option>
+                                <option value="平鎮區">平鎮區</option>
+                                <option value="新屋區">新屋區</option>
+                                <option value="觀音區">觀音區</option>
+                                <option value="復興區">復興區</option>
+                            </select>
+                        </div>
+
+                        <div class="sub-field" v-show="profileForm.city_region === '其他縣市'">
+                            <input class="field-input mt-2" type="text" v-model="profileForm.other_city"
+                                placeholder="請輸入您的縣市與區域">
+                        </div>
+
+                        <div class="field-label">家庭文化或族群背景（可複選）</div>
+                        <div class="identity-group">
+                            <label class="identity-item" v-for="opt in identityOptions" :key="opt">
+                                <input type="checkbox" v-model="profileForm.identity" :value="opt">
+                                {{ opt }}
+                            </label>
+                        </div>
+                        <div class="sub-field mt-2" v-show="profileForm.identity.includes('非本國籍')">
+                            <input class="field-input" type="text" v-model="profileForm.identity_country"
+                                placeholder="請輸入您來自的國家">
+                        </div>
+
+                        <div class="field-label">與幼兒的關係</div>
+                        <select class="field-input" v-model="profileForm.relationship" required>
+                            <option value="" disabled>請選擇關係</option>
+                            <option value="父母與孩子">父母與孩子</option>
+                            <option value="祖父母/孫子女">祖父母/孫子女</option>
+                            <option value="親屬">親屬</option>
+                            <option value="社福/教育機構">社福/教育機構</option>
+                            <option value="托育人員/保母">托育人員/保母</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </template>
+
+                    <!-- 新增幼兒（虛線區塊） -->
+                    <div class="add-person-section">
+                        <div class="add-person-title">＋ 新增其他入館幼兒（選填）</div>
+                        <input class="field-input mb-2" type="text" v-model="additionalChild.name" placeholder="新增幼兒姓名">
+                        <div class="d-flex gap-2" v-show="additionalChild.name">
+                            <select class="field-input" v-model="additionalChild.gender" style="flex:1">
+                                <option value="">性別</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                            <input class="field-input" type="date" v-model="additionalChild.birthday" style="flex:2">
+                        </div>
+                        <small style="color:var(--text-muted); font-size:0.8rem; display:block; margin-top:0.4rem;"
+                            v-show="additionalChild.name">
+                            ＊新增幼兒請務必填寫性別與生日
+                        </small>
+                    </div>
+
+                    <button type="button" class="btn-green-custom" @click="submitOldMemberCheckin"
+                        :disabled="isLoading">
+                        {{ isLoading ? '處理中…' : '確認入館 →' }}
+                    </button>
+                    <button type="button" class="btn-ghost-custom" @click="resetForm">
+                        取消並返回
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== 成功訊息區 ===== -->
+            <div v-show="currentView === 'success'">
+                <div class="form-card text-center">
+                    <i class="bi bi-check-circle-fill" style="font-size:64px; color: rgb(132, 165, 115);"></i>
+                    <div class="success-title">報到成功！</div>
+                    <p style="font-size:1.05rem; font-weight:600; color:var(--text-main); margin:0.4rem 0 1.25rem;">
+                        {{ welcomeMessage }}
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">
+                        系統將於 <strong>{{ countdown }}</strong> 秒後自動重置
+                    </p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp, ref, reactive } = Vue;
+
+        createApp({
+            setup() {
+                const currentView = ref('checkin');
+                const phone = ref('');
+                const isLoading = ref(false);
+                const showNewMemberFields = ref(false);
+
+                const newMember = reactive({
+                    parent_name: '',
+                    parent_gender: '',
+                    has_companions: false,
+                    companions: [{ name: '', gender: '' }],
+                    city_region: '',
+                    sub_district: '',
+                    taoyuan_district: '',
+                    other_city: '',
+                    purpose: '',
+                    identity: [],
+                    identity_country: '',
+                    relationship: '父母與孩子',
+                    child_count: 0,
+                    children: []
+                });
+
+                const identityOptions = [
+                    '新住民', '原住民', '客家人',
+                    '尚未取得中華民國籍', '非本國籍',
+                    '以上皆無', '不願透露'
+                ];
+
+                const oldMemberData = reactive({ parents: [], children: [] });
+                const selectedParentIds = ref([]);
+                const selectedChildren = ref([]);
+                const memberId = ref(null);
+                const profileIncomplete = ref(false);
+                const profileForm = reactive({
+                    city_region: '', sub_district: '', taoyuan_district: '', other_city: '',
+                    identity: [], identity_country: '', relationship: '父母與孩子'
+                });
+                const oldCheckin = reactive({
+                    purpose: '',
+                    has_companions: false,
+                    companions: [{ name: '', gender: '' }]
+                });
+                const additionalChild = reactive({ name: '', gender: '', birthday: '' });
+                const welcomeMessage = ref('');
+                const countdown = ref(5);
+
+                async function handlePhoneSubmit() {
+                    if (showNewMemberFields.value) { await submitNewMember(); return; }
+                    if (phone.value.length !== 10 || !phone.value.startsWith('09')) {
+                        alert('請輸入正確的手機號碼格式 (09開頭，共10碼)'); return;
+                    }
+                    isLoading.value = true;
+                    try {
+                        const response = await fetch('k2chkin.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ phone: phone.value })
+                        });
+                        const data = await response.json();
+                        if (data.is_new) {
+                            showNewMemberFields.value = true;
+                        } else {
+                            oldMemberData.parents = data.parents || [];
+                            oldMemberData.children = data.children || [];
+                            memberId.value = data.member_id;
+                            profileIncomplete.value = !!data.profile_incomplete;
+                            if (profileIncomplete.value) {
+                                profileForm.relationship = data.relationship || '父母與孩子';
+                            }
+                            currentView.value = 'oldMember';
+                        }
+                    } catch (e) { alert('系統錯誤，請稍後再試'); }
+                    finally { isLoading.value = false; }
+                }
+
+                async function submitNewMember() {
+                    // 驗證幼兒年齡：不得超過國小入學年齡
+                    for (const child of newMember.children) {
+                        if (child.birthday && isOverSchoolAge(child.birthday)) {
+                            alert(`幼兒「${child.name || ''}」已屆限制入館年紀，無法報到，請洽館內人員。`);
+                            return;
+                        }
+                    }
+                    isLoading.value = true;
+                    try {
+                        const submitData = { phone: phone.value, ...newMember };
+                        const response = await fetch('newmember.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(submitData)
+                        });
+                        const data = await response.json();
+                        if (data.success) { showSuccessMessage(data.message); }
+                        else { alert(data.message || '註冊失敗'); }
+                    } catch (e) { alert('系統錯誤'); }
+                    finally { isLoading.value = false; }
+                }
+
+                // ── 新會員：陪同成人操作 ──
+                function addNewCompanion() {
+                    newMember.companions.push({ name: '', gender: '' });
+                }
+                function removeNewCompanion() {
+                    if (newMember.companions.length > 1) newMember.companions.pop();
+                }
+
+                // ── 舊會員：陪同成人操作 ──
+                function addOldCompanion() {
+                    oldCheckin.companions.push({ name: '', gender: '' });
+                }
+                function removeOldCompanion() {
+                    if (oldCheckin.companions.length > 1) oldCheckin.companions.pop();
+                }
+
+                function handleCityChange() {
+                    newMember.sub_district = '';
+                    newMember.taoyuan_district = '';
+                    newMember.other_city = '';
+                }
+
+                function handleProfileCityChange() {
+                    profileForm.sub_district = '';
+                    profileForm.taoyuan_district = '';
+                    profileForm.other_city = '';
+                }
+
+                function updateChildFields() {
+                    const count = newMember.child_count;
+                    const current = newMember.children.length;
+                    if (count > current) {
+                        for (let i = current; i < count; i++)
+                            newMember.children.push({ name: '', gender: '', birthday: '' });
+                    } else { newMember.children.splice(count); }
+                }
+
+                async function submitOldMemberCheckin() {
+                    if (selectedParentIds.value.length === 0 && selectedChildren.value.length === 0) {
+                        alert('請至少選擇一位入館人員'); return;
+                    }
+                    if (additionalChild.name && (!additionalChild.gender || !additionalChild.birthday)) {
+                        alert('新增幼兒請務必填寫性別與生日'); return;
+                    }
+                    // 驗證已勾選幼兒年齡
+                    const checkedChildren = oldMemberData.children.filter(c => selectedChildren.value.includes(c.id));
+                    for (const child of checkedChildren) {
+                        if (isOverSchoolAge(child.birthday)) {
+                            alert(`幼兒「${child.name}」已屆限制入館年紀，無法報到，請洽館內人員。`);
+                            return;
+                        }
+                    }
+                    // 驗證新增幼兒年齡
+                    if (additionalChild.name && additionalChild.birthday && isOverSchoolAge(additionalChild.birthday)) {
+                        alert(`幼兒「${additionalChild.name}」已屆限制入館年紀，無法報到，請洽館內人員。`);
+                        return;
+                    }
+                    // 驗證陪同成人
+                    if (oldCheckin.has_companions) {
+                        const invalid = oldCheckin.companions.some(c => !c.name || !c.gender);
+                        if (invalid) { alert('請填寫陪同成人的姓名與性別'); return; }
+                    }
+                    // 驗證已勾選的家長都有填性別
+                    const checkedParents = oldMemberData.parents.filter(p => selectedParentIds.value.includes(p.id));
+                    if (checkedParents.some(p => !p.gender)) {
+                        alert('請為已勾選的家長選擇性別'); return;
+                    }
+                    // 驗證首次入館（僅透過報名連動建立）會員需補填的基本資料
+                    if (profileIncomplete.value) {
+                        if (!profileForm.city_region) { alert('請選擇您來自哪裡'); return; }
+                        if (!profileForm.relationship) { alert('請選擇與幼兒的關係'); return; }
+                    }
+                    isLoading.value = true;
+                    try {
+                        // 補填基本資料（更新會員問卷資訊）
+                        if (profileIncomplete.value) {
+                            let final_location = profileForm.city_region;
+                            if (profileForm.city_region === '桃園市中壢區' && profileForm.sub_district) {
+                                final_location += ' - ' + profileForm.sub_district;
+                            } else if (profileForm.city_region === '桃園市其他行政區' && profileForm.taoyuan_district) {
+                                final_location = '桃園市 ' + profileForm.taoyuan_district;
+                            } else if (profileForm.city_region === '其他縣市' && profileForm.other_city) {
+                                final_location = profileForm.other_city;
+                            }
+                            const profileRes = await fetch('api_member.php', {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    member_id: memberId.value,
+                                    relationship: profileForm.relationship,
+                                    phone: phone.value,
+                                    city_region: final_location,
+                                    identity: profileForm.identity.join(','),
+                                    identity_country: profileForm.identity_country
+                                })
+                            });
+                            const profileData = await profileRes.json();
+                            if (!profileData.success) {
+                                alert('基本資料更新失敗：' + (profileData.message || '請稍後再試'));
+                                isLoading.value = false;
+                                return;
+                            }
+                        }
+                        const companions = oldCheckin.has_companions
+                            ? oldCheckin.companions.filter(c => c.name)
+                            : [];
+                        let adult_male = 0, adult_female = 0;
+                        checkedParents.forEach(p => {
+                            if (p.gender === '男') adult_male++;
+                            else if (p.gender === '女') adult_female++;
+                            else adult_male++;
+                        });
+                        companions.forEach(c => {
+                            if (c.gender === '男') adult_male++;
+                            else if (c.gender === '女') adult_female++;
+                            else adult_male++;
+                        });
+
+                        const checkinData = {
+                            phone: phone.value,
+                            selected_parents: checkedParents.map(p => ({ id: p.id, gender: p.gender })),
+                            selected_children: selectedChildren.value,
+                            companions: companions,
+                            additional_child: additionalChild.name ? additionalChild : null,
+                            purpose: oldCheckin.purpose,
+                            adult_male,
+                            adult_female
+                        };
+                        const response = await fetch('oldmember.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(checkinData)
+                        });
+                        const data = await response.json();
+                        if (data.success) { showSuccessMessage(data.message || '報到成功！'); }
+                        else { alert(data.message || '報到失敗，請重試'); }
+                    } catch (e) { alert('系統錯誤，請稍後再試'); }
+                    finally { isLoading.value = false; }
+                }
+
+                function showSuccessMessage(message) {
+                    welcomeMessage.value = message;
+                    currentView.value = 'success';
+                    countdown.value = 5;
+                    const timer = setInterval(() => {
+                        countdown.value--;
+                        if (countdown.value <= 0) { clearInterval(timer); resetForm(); }
+                    }, 1000);
+                }
+
+                function resetForm() {
+                    currentView.value = 'checkin';
+                    phone.value = '';
+                    showNewMemberFields.value = false;
+                    Object.assign(newMember, {
+                        parent_name: '', parent_gender: '',
+                        has_companions: false,
+                        companions: [{ name: '', gender: '' }],
+                        city_region: '', sub_district: '',
+                        taoyuan_district: '', other_city: '', purpose: '',
+                        identity: [], identity_country: '',
+                        relationship: '父母與孩子',
+                        child_count: 0, children: []
+                    });
+                    selectedParentIds.value = [];
+                    selectedChildren.value = [];
+                    memberId.value = null;
+                    profileIncomplete.value = false;
+                    Object.assign(profileForm, {
+                        city_region: '', sub_district: '', taoyuan_district: '', other_city: '',
+                        identity: [], identity_country: '', relationship: '父母與孩子'
+                    });
+                    Object.assign(oldCheckin, {
+                        purpose: '',
+                        has_companions: false,
+                        companions: [{ name: '', gender: '' }]
+                    });
+                    Object.assign(additionalChild, { name: '', gender: '', birthday: '' });
+                }
+
+                // 計算台灣國小入學截止生日：當年 8/31 前滿 6 歲者該年 9 月入學
+                // 若今天 >= 9/1，截止生日為今年 8/31；若今天 < 9/1，截止生日為去年 8/31
+                function getSchoolCutoffDate() {
+                    const today = new Date();
+                    const month = today.getMonth() + 1;
+                    const cutoffYear = month >= 9 ? today.getFullYear() : today.getFullYear() - 1;
+                    // 回傳字串格式 YYYY-MM-DD，避免時區問題
+                    const mm = String(cutoffYear - 6).padStart(4, '0');
+                    return `${mm}-08-31`;
+                }
+
+                function isOverSchoolAge(birthday) {
+                    if (!birthday) return false;
+                    // 直接用字串比較 YYYY-MM-DD，8/31 當天也算屆齡（<=）
+                    return birthday <= getSchoolCutoffDate();
+                }
+
+                function calculateAge(birthday) {
+                    if (!birthday) return '';
+                    const today = new Date();
+                    const b = new Date(birthday);
+                    let age = today.getFullYear() - b.getFullYear();
+                    const m = today.getMonth() - b.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+                    return age <= 0 ? '未滿 1 歲' : age + ' 歲';
+                }
+
+                return {
+                    currentView, phone, isLoading, showNewMemberFields,
+                    newMember, identityOptions,
+                    oldMemberData, selectedParentIds, selectedChildren,
+                    oldCheckin,
+                    additionalChild,
+                    memberId, profileIncomplete, profileForm,
+                    welcomeMessage, countdown,
+                    handlePhoneSubmit, submitNewMember, handleCityChange, handleProfileCityChange,
+                    updateChildFields, submitOldMemberCheckin, resetForm, calculateAge,
+                    addNewCompanion, removeNewCompanion,
+                    addOldCompanion, removeOldCompanion,
+                    isOverSchoolAge
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
