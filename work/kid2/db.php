@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Taipei');
 $host = 'localhost';        // 資料庫主機
 $username = 'root';         // 資料庫使用者名稱
 $password = '';             // 資料庫密碼
-$database = 'litosan_checkin'; // 資料庫名稱
+$database = 'litosan_demo'; // 資料庫名稱
 
 // 建立連線
 $conn = new mysqli($host, $username, $password, $database);
