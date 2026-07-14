@@ -919,6 +919,73 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script>
+        // ═══════════ 展示模式（GitHub Pages 作品集用）═══════════
+        // 非 localhost 環境（如 tee048.github.io）自動啟用：
+        // apiFetch 不打 PHP，改回傳內建假資料模擬後端。
+        // 本機 XAMPP 開啟時 DEMO_MODE 為 false，走原本 fetch，行為完全不變。
+        const DEMO_MODE = !['localhost', '127.0.0.1'].includes(location.hostname);
+
+        // 假會員資料（與 litosan_demo 資料庫 seed 一致）
+        const demoMembers = {
+            '0912345678': {
+                member_id: 1, profile_incomplete: false, relationship: '媽媽',
+                parents: [{ id: 1, name: '王小美', gender: '女' }],
+                children: [{ id: 1, name: '王小寶', gender: '男', birthday: '2023-05-10' }]
+            },
+            '0922333444': {
+                member_id: 2, profile_incomplete: false, relationship: '爸爸',
+                parents: [{ id: 2, name: '陳志豪', gender: '男' }, { id: 3, name: '陳林淑芬', gender: '女' }],
+                children: [{ id: 2, name: '陳心愛', gender: '女', birthday: '2022-11-03' }, { id: 3, name: '陳心怡', gender: '女', birthday: '2024-08-15' }]
+            },
+            '0910222333': {
+                member_id: 8, profile_incomplete: true, relationship: '媽媽',
+                parents: [{ id: 10, name: '劉思涵', gender: '女' }],
+                children: [{ id: 9, name: '劉小蓁', gender: '女', birthday: '2023-12-25' }]
+            }
+        };
+        let demoNextId = 100;
+
+        async function apiFetch(url, options = {}) {
+            if (!DEMO_MODE) return fetch(url, options);
+            await new Promise(r => setTimeout(r, 400)); // 模擬網路延遲
+            const body = options.body ? JSON.parse(options.body) : {};
+            let data = { success: true };
+            if (url === 'k2chkin.php') {
+                const m = demoMembers[body.phone];
+                data = m ? { success: true, is_new: false, ...m }
+                         : { success: true, is_new: true };
+            } else if (url === 'newmember.php') {
+                // 註冊後存進記憶體，同一瀏覽階段再輸入同號碼會走舊會員流程
+                demoMembers[body.phone] = {
+                    member_id: demoNextId++, profile_incomplete: false,
+                    relationship: body.relationship || '父母與孩子',
+                    parents: [{ id: demoNextId++, name: body.parent_name, gender: body.parent_gender }],
+                    children: (body.children || []).filter(c => c.name).map(c => ({ id: demoNextId++, ...c }))
+                };
+                data = { success: true, message: '歡迎 ' + body.parent_name + '！註冊與報到完成（展示模式）' };
+            } else if (url === 'oldmember.php') {
+                data = { success: true, message: '歡迎回來！報到完成（展示模式）' };
+            } else if (url === 'api_member.php') {
+                const m = Object.values(demoMembers).find(x => x.member_id === body.member_id);
+                if (m) m.profile_incomplete = false;
+                data = { success: true, data: { member_id: body.member_id, message: '會員資料已更新' } };
+            }
+            return { json: async () => data };
+        }
+
+        // 展示模式提示列（讓看作品集的人知道怎麼玩）
+        if (DEMO_MODE) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const tip = document.createElement('div');
+                tip.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#6b5d4f;color:#fff;text-align:center;font-size:14px;line-height:1.6;padding:8px 16px;opacity:.93;';
+                tip.textContent = '🌱 作品集展示模式（資料不會實際儲存）｜舊會員報到：0912345678｜首次補填流程：0910222333｜其他號碼可體驗新會員註冊';
+                document.body.appendChild(tip);
+            });
+        }
+        // ═══════════ 展示模式區塊結束 ═══════════
+    </script>
+
+    <script>
         const { createApp, ref, reactive } = Vue;
 
         createApp({
@@ -976,7 +1043,7 @@
                     }
                     isLoading.value = true;
                     try {
-                        const response = await fetch('k2chkin.php', {
+                        const response = await apiFetch('k2chkin.php', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ phone: phone.value })
@@ -1009,7 +1076,7 @@
                     isLoading.value = true;
                     try {
                         const submitData = { phone: phone.value, ...newMember };
-                        const response = await fetch('newmember.php', {
+                        const response = await apiFetch('newmember.php', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(submitData)
@@ -1105,7 +1172,7 @@
                             } else if (profileForm.city_region === '其他縣市' && profileForm.other_city) {
                                 final_location = profileForm.other_city;
                             }
-                            const profileRes = await fetch('api_member.php', {
+                            const profileRes = await apiFetch('api_member.php', {
                                 method: 'PUT',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -1149,7 +1216,7 @@
                             adult_male,
                             adult_female
                         };
-                        const response = await fetch('oldmember.php', {
+                        const response = await apiFetch('oldmember.php', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(checkinData)
